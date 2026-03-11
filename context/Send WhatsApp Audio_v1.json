@@ -1,0 +1,261 @@
+{
+  "name": "Send WhatsApp Audio",
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "// In a Code node after receiving the audio\nfor (const item of $input.all()) {\n  // Check if data field exists and has binary data\n  if (item.binary?.data) {\n    // Create a proper filename with timestamp\n    const timestamp = Date.now();\n    const filename = `audio_${timestamp}.opus`;\n    \n    // If the binary data doesn't have a proper filename\n    if (!item.binary.data.fileName || !item.binary.data.fileName.endsWith('.opus')) {\n      item.binary.data.fileName = filename;\n      item.binary.data.mimeType = 'audio/opus';\n    }\n  }\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        512,
+        32
+      ],
+      "id": "2f57a250-5b1a-42b0-ad12-42e97eaa62b4",
+      "name": "Audio File Properties"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "737529652786856",
+        "recipientPhoneNumber": "={{ $('Insert Voice ID').item.json.wa_id }}",
+        "messageType": "audio",
+        "mediaPath": "useMedian8n",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        736,
+        32
+      ],
+      "id": "79aca205-cc95-43ad-80b8-4bc66b2e3aba",
+      "name": "Send Audio",
+      "webhookId": "303dde91-849f-4bab-89cd-76284aff1a74",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "kobapbG2u2SwupVY",
+          "name": "WhatsApp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "speech",
+        "voice": {
+          "__rl": true,
+          "value": "={{ $json.voiceId }}",
+          "mode": "id"
+        },
+        "text": "={{ $json.message }}",
+        "additionalOptions": {
+          "model": {
+            "mode": "list",
+            "value": "eleven_multilingual_v2"
+          },
+          "outputFormat": "opus_48000_32",
+          "languageCode": "={{ $json.lang }}"
+        },
+        "requestOptions": {}
+      },
+      "type": "@elevenlabs/n8n-nodes-elevenlabs.elevenLabs",
+      "typeVersion": 1,
+      "position": [
+        288,
+        32
+      ],
+      "id": "17a83afe-2e4b-42f4-b409-8991366fa8b6",
+      "name": "Generate Audio",
+      "notesInFlow": true,
+      "credentials": {
+        "elevenLabsApi": {
+          "id": "hU7NyapDmJBlBc3C",
+          "name": "ElevenLabs account"
+        }
+      },
+      "notes": "ElevenLabs Text to Speech"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "=wachat_{{ $('Insert Voice ID').item.json.wa_id }}",
+        "collectionName": "chatMemory",
+        "databaseName": "dbSophia",
+        "contextWindowLength": 0
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryMongoDbChat",
+      "typeVersion": 1,
+      "position": [
+        288,
+        400
+      ],
+      "id": "55c0a5b7-38f9-4626-bf91-a1bbd727f97f",
+      "name": "MongoDB Chat Memory1",
+      "credentials": {
+        "mongoDb": {
+          "id": "0NQMY2WeWr9xh5sN",
+          "name": "MongoDB (Sophia)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "ai",
+              "message": "={{ $json.message }}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        288,
+        208
+      ],
+      "id": "ad1c8ba7-607e-44f4-85fb-742bb18f25c9",
+      "name": "Chat Memory",
+      "notesInFlow": true,
+      "notes": "Insert message in Chat Memory"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "wa_id"
+            },
+            {
+              "name": "message"
+            },
+            {
+              "name": "lang"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -160,
+        32
+      ],
+      "id": "8a893159-827f-4ec9-a60c-4405820752b4",
+      "name": "Invoke Send Audio"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Input language code from previous node\nconst lang = $input.first().json.lang || \"en\";\n\n// ## Voice for each language\n\n// JddqVF50ZSIR7SRbJE6u | Valeria - Friendly Woman  | 2y  | Spanish | ****\n// 3Fx71T889APcHRu4VtQf | Medellin - Colombian voiceId | 0d  | Spanish | ****\n// g6xIsTj2HwM6VR4iXFCw | Jessica Anne Bogart - Chatty and Friendly | 2y  | hi, ar, fr, 13+ | ****\n// VmejBeYhbrcTPwDniox7 | Lina - Carefree & Fresh | 2y  | es  | *****\n// HjAbwkwspyYo9MhDWD5x | Celeste | 2y  | en| ***\n\nconst voiceIds = {\n  en: `g6xIsTj2HwM6VR4iXFCw`,   // Jessica Anne Bogart\n  hi: `g6xIsTj2HwM6VR4iXFCw`,   // Jessica Anne Bogart\n  ar: `g6xIsTj2HwM6VR4iXFCw`,   // Jessica Anne Bogart\n  fr: `g6xIsTj2HwM6VR4iXFCw`,   // Jessica Anne Bogart\n  es: `VmejBeYhbrcTPwDniox7`,   // Lina - Carefree & Fresh\n}\n// Determine the message to output\n\n$input.first().json.voiceId = voiceIds[lang] || voiceIds.en\n$input.first().json.lang = lang\n\n// Return as n8n output\nreturn $input.first();\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        64,
+        32
+      ],
+      "id": "63d6f1e1-3416-47dd-9839-5f42cfa99c68",
+      "name": "Insert Voice ID"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Audio File Properties": {
+      "main": [
+        [
+          {
+            "node": "Send Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Audio": {
+      "main": [
+        []
+      ]
+    },
+    "Generate Audio": {
+      "main": [
+        [
+          {
+            "node": "Audio File Properties",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MongoDB Chat Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "Chat Memory",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Invoke Send Audio": {
+      "main": [
+        [
+          {
+            "node": "Insert Voice ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert Voice ID": {
+      "main": [
+        [
+          {
+            "node": "Generate Audio",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Chat Memory",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "d6ceba7a-fcc3-433c-8c05-63eed03a0e61",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "57d9be6266bd70ab0ce4ade7669c86256cba66f28007bdeb1325dba00857b024"
+  },
+  "id": "9gUFqaldRZxCwhUh",
+  "tags": [
+    {
+      "updatedAt": "2025-10-02T00:57:58.151Z",
+      "createdAt": "2025-10-02T00:57:58.151Z",
+      "id": "uiffWimArCgY5nFW",
+      "name": "virtualAgent"
+    },
+    {
+      "updatedAt": "2025-11-20T18:23:37.307Z",
+      "createdAt": "2025-11-20T18:23:37.307Z",
+      "id": "wgXrMWK71sFH6xi4",
+      "name": "Sophia"
+    },
+    {
+      "updatedAt": "2025-10-05T07:40:17.974Z",
+      "createdAt": "2025-10-05T07:40:17.974Z",
+      "id": "xCdfZWOxtL8nEXFg",
+      "name": "WhatsApp"
+    }
+  ]
+}

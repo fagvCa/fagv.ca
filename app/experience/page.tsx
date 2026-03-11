@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 const mississaugaHighlights = [
   "Designed autonomous AI sales agent (Sophia) to handle lead qualification over WhatsApp Business",
   "Integrated Meta Lead Ads with n8n orchestration for instant lead ingestion and qualification",
-  "Built multilingual conversation workflows in English, Spanish, and French",
+  "Built multilingual conversation workflows in English, Spanish, and many languages more",
   "Automated real-time inventory queries reducing sales team response time from hours to seconds",
   "Implemented automated appointment booking directly within WhatsApp conversations",
   "Created Google Sheets data synchronization for leads, appointments, and conversation logs",

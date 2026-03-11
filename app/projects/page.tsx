@@ -31,7 +31,7 @@ const sophiaOutcomes = [
     icon: Globe,
     metric: "3 languages",
     label: "Conversation support",
-    detail: "English, Spanish, and French — auto-detected",
+    detail: "English, and Spanish — auto-detected",
   },
   {
     icon: TrendingUp,
@@ -52,7 +52,7 @@ const sophiaCapabilities = [
     icon: Globe,
     title: "Multilingual Conversation",
     description:
-      "Handles inbound and outbound conversations in English, Spanish, and French — automatically detecting language and adapting responses.",
+      "Handles inbound and outbound conversations in English, Spanish, or one of many other languages — automatically detecting language and adapting responses.",
   },
   {
     icon: MessageSquare,

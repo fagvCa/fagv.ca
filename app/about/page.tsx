@@ -180,7 +180,7 @@ export default function AboutPage() {
               <StatRow label="Domain" value="AI Agents & Automation" />
               <StatRow label="Prior Field" value="Telecommunications" />
               <StatRow label="Location" value="Mississauga, ON" />
-              <StatRow label="Languages" value="English, Spanish, French" />
+              <StatRow label="Languages" value="English, Spanish" />
             </CardContent>
           </Card>
 

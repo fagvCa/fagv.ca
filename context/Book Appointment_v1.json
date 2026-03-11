@@ -1,0 +1,198 @@
+{
+  "name": "Book Appointment",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "start"
+            },
+            {
+              "name": "client_email"
+            },
+            {
+              "name": "client_name"
+            },
+            {
+              "name": "salesperson"
+            },
+            {
+              "name": "wa_id"
+            },
+            {
+              "name": "lead_id"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -544,
+        -16
+      ],
+      "id": "d239a534-945d-4fa7-84bf-0247d8cf9344",
+      "name": "When Executed by Another Workflow",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "\n\nconst grant_id = \"a3a19f2e-d8a0-4c9c-b78b-0fcc43e7db01\";\nconst calendar_id = \"QUFNa0FEUXlOV1poT1dJeExXUTJaVE10TkRjMlpDMDVPVFZqTFRBM056VTJNMlZsTkdRMk9BQXVBQUFBQUFDR04zQ2hnN3FoUUluT2xoelkxYVVnQVFBOXlSRmVSWWxBUXJ6SWFKVzVoRVRtQUFHU3RWdUhBQUE9\";\n\nconst isoStart = $input.first().json.start;\n\n// Get milliseconds first\nconst epochMs = new Date(isoStart).getTime(); \n\n// Divide by 1000 to get seconds and use Math.floor() or parseInt() for an integer value\nconst epochSec = Math.floor(epochMs / 1000); \n// Example output: 1693399200 \n\n\n\n\nconst body= {\n    \"title\": \"🤩 Aprobación el mismo día\",\n    \"busy\": true,\n    \"metadata\":\n    {\n        \"lead_id\": $input.first().json.lead_id,\n        \"salesperson\": $input.first().json.salesperson\n    },\n    \"participants\": [\n    {\n        \"email\": $input.first().json.client_email,\n        \"comment\": \"Este es el comentario de un participante\",\n        \"name\": $input.first().json.client_name,\n        \"phone_number\": $input.first().json.wa_id\n    }],\n    \"resources\": [],\n    \"description\": \"<div><p><span>Enjoy a fully guided test-drive session tailored to your needs. During this one-hour appointment, you’ll have the opportunity to:</span></p><ul><li>🚘 <strong>Test drive</strong><span> the vehicle you’re interested in</span></li><li>👨🏻‍💻 <span>Review </span><strong>payment projections</strong><span> based on your budget</span></li><li>✅ <span>Complete a </span><strong>credit approval</strong><span> if you choose to proceed</span></li><li>🛒 <strong>Reserve</strong><span> the vehicle on the spot to secure availability</span></li></ul><p><span>This session is designed to give you all the information and confidence you need to make the best decision—quickly, comfortably, and with no pressure.</span></p></div>\",\n    \"when\":\n    {\n        \"start_time\": epochSec,\n        \"end_time\": epochSec + 3600,\n        \"start_timezone\": \"America/Toronto\",\n        \"end_timezone\": \"America/Toronto\"\n    },\n    \"location\": \"Mississauga Hyundai, 3045 Glen Erin Dr, Mississauga, ON L5L 1J3\",\n}\n\nconst retorno = {\n  grant_id: grant_id,\n  calendar_id: calendar_id,\n  isoStart: isoStart,\n  body: body\n}\n\nreturn retorno;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -336,
+        -16
+      ],
+      "id": "d1793713-c9f9-4f25-aef5-bf546ab0c7cb",
+      "name": "Build Request"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.us.nylas.com/v3/grants/{{ $json.grant_id }}/events?calendar_id={{ $json.calendar_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.body.toJsonString() }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -144,
+        -16
+      ],
+      "id": "f179edd1-7c60-415f-9dea-cde061a18dd2",
+      "name": "Post Event",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "gTcEfTyXJv9DZweg",
+          "name": "Nylas Sophia2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a84bf0fd-46cb-4017-b3af-beda6d0dc3d9",
+              "name": "status",
+              "value": "={{ $json.data.status }}",
+              "type": "string"
+            },
+            {
+              "id": "77bf335d-4130-4d58-ac67-56d998be9ab6",
+              "name": "organizer.name",
+              "value": "={{ $json.data.organizer.name }}",
+              "type": "string"
+            },
+            {
+              "id": "40ff31fc-4939-4448-addf-243e9dd2f98e",
+              "name": "organizer.email",
+              "value": "={{ $json.data.organizer.email }}",
+              "type": "string"
+            },
+            {
+              "id": "a2181714-d945-40cf-adb2-b325ba6160d6",
+              "name": "start_time",
+              "value": "={{ $json.data.when.start_time }}",
+              "type": "number"
+            },
+            {
+              "id": "9adc298b-02d4-44f8-8ea9-6630262f52fc",
+              "name": "end_time",
+              "value": "={{ $json.data.when.end_time }}",
+              "type": "number"
+            },
+            {
+              "id": "a2198bc8-b269-4b09-9b85-6b81634e951a",
+              "name": "created_at",
+              "value": "={{ $json.data.created_at }}",
+              "type": "number"
+            },
+            {
+              "id": "02470988-9520-4d9d-8ef7-6ebbd53ff413",
+              "name": "event_id",
+              "value": "={{ $json.data.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        32,
+        -16
+      ],
+      "id": "503de795-3818-4d3c-8c1b-0e88ad8b772d",
+      "name": "Response"
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "start": "2025-12-06T12:30:00.000-05:00",
+          "client_email": "fagv.ca@gmail.com",
+          "client_name": "Fabio",
+          "salesperson": "Fabio Gomez",
+          "wa_id": "4372187469",
+          "lead_id": "No Stock"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Build Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Request": {
+      "main": [
+        [
+          {
+            "node": "Post Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post Event": {
+      "main": [
+        [
+          {
+            "node": "Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "bf649d6a-1c47-485b-b234-59678721ad6d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "57d9be6266bd70ab0ce4ade7669c86256cba66f28007bdeb1325dba00857b024"
+  },
+  "id": "KgppMLHxmnrfwmBQ",
+  "tags": []
+}

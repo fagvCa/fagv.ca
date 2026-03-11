@@ -1,0 +1,393 @@
+{
+  "name": "Send WhatsApp Template",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "=https://www.mississaugahyundai.com/wp-content/plugins/convertus-vms/include/php/ajax-vehicles.php?endpoint=https://vms.prod.convertus.rocks/api/filtering/?cp=3243%26ln=en%26pg=1%26pc=30%26qs={{$json.stock}}&action=vms_data",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -736,
+        -240
+      ],
+      "id": "5e1fe179-a28c-4239-8a9a-98de5c5ce2b7",
+      "name": "getAuto"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b9f0314e-12ed-4967-99b2-871d1f7dc27e",
+              "name": "image",
+              "value": "={{ $item(\"0\").$node[\"getAuto\"].json[\"results\"][\"0\"][\"image\"][\"image_lg\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "750a1c10-c01b-4c3c-bfc6-a94cc07cb7cb",
+              "name": "model",
+              "value": "={{ $item(\"0\").$node[\"getAuto\"].json.results[0].year + ' ' + $item(\"0\").$node[\"getAuto\"].json.results[0].make + ' ' + $item(\"0\").$node[\"getAuto\"].json.results[0].model }}",
+              "type": "string"
+            },
+            {
+              "id": "971516ef-9ce2-4baf-95ff-90b9d7801a22",
+              "name": "trim",
+              "value": "={{ $item(\"0\").$node[\"getAuto\"].json.results[0].trim }}",
+              "type": "string"
+            },
+            {
+              "id": "70def2a6-6ec4-49ec-a341-86772f49d396",
+              "name": "price",
+              "value": "={{ $item(\"0\").$node[\"getAuto\"].json.results[0].internet_price }}",
+              "type": "string"
+            },
+            {
+              "id": "bbd20cfb-a9cd-4ae4-89f3-10dbe8ec6d47",
+              "name": "mileage",
+              "value": "={{ $item(\"0\").$node[\"getAuto\"].json.results[0].odometer }}",
+              "type": "string"
+            },
+            {
+              "id": "d9a0fb31-4ba3-4b47-8fad-2562d0e3f791",
+              "name": "body_style",
+              "value": "={{ $item(\"0\").$node[\"getAuto\"].json.results[0].body_style }}",
+              "type": "string"
+            },
+            {
+              "id": "47df39bc-5923-45b2-910b-89837110a2e6",
+              "name": "colour",
+              "value": "={{ $item(\"0\").$node[\"getAuto\"].json.results[0].exterior_color }}",
+              "type": "string"
+            },
+            {
+              "id": "57b213ef-1d32-489c-a3c7-09cfde3e2d95",
+              "name": "stock",
+              "value": "={{ $item(\"0\").$node[\"getAuto\"].json.results[0].stock_number }}",
+              "type": "string"
+            },
+            {
+              "id": "a4d4c167-eeaf-40ab-a4f9-5b12b0c98981",
+              "name": "ad_id",
+              "value": "={{ $item(\"0\").$node[\"getAuto\"].json.results[0].ad_id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -288,
+        -240
+      ],
+      "id": "1440eb47-170f-45ff-a3d6-0f2d70bfcf86",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "phoneNumberId": "737529652786856",
+        "recipientPhoneNumber": "={{ $('When Executed by Another Workflow').item.json[\"wa-id\"] }}",
+        "template": "stock_details|en",
+        "components": {
+          "component": [
+            {
+              "type": "header",
+              "headerParameters": {
+                "parameter": [
+                  {
+                    "type": "image",
+                    "imageLink": "={{ $json.dest }}"
+                  }
+                ]
+              }
+            },
+            {
+              "bodyParameters": {
+                "parameter": [
+                  {
+                    "text": "={{ $json.model }}"
+                  },
+                  {
+                    "text": "={{ $json.trim }}"
+                  },
+                  {
+                    "text": "={{ $json.price.toNumber().toLocaleString() }}"
+                  },
+                  {
+                    "text": "={{ $json.mileage.toNumber().toLocaleString() }}"
+                  },
+                  {
+                    "text": "={{ $json.body_style }}"
+                  },
+                  {
+                    "text": "={{ $json.colour }}"
+                  },
+                  {
+                    "text": "={{ $json.stock }}"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "button",
+              "buttonParameters": {
+                "parameter": {
+                  "payload": "={ \"stock\": \"{{ $json.stock }}\", \"liked\": \"yes\" }"
+                }
+              }
+            },
+            {
+              "type": "button",
+              "index": 1,
+              "buttonParameters": {
+                "parameter": {
+                  "payload": "={ \"stock\": \"{{ $json.stock }}\", \"liked\": \"No\" }"
+                }
+              }
+            },
+            {
+              "type": "button",
+              "sub_type": "url",
+              "index": 2,
+              "buttonParameters": {
+                "parameter": {
+                  "type": "text",
+                  "text": "={{ $json.ad_id }}"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        160,
+        -336
+      ],
+      "id": "8bae3d4f-e52c-44c2-88ca-8bffd690a62f",
+      "name": "Send template",
+      "webhookId": "217f960c-96cf-4d7e-9789-747e93be2ec1",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "kobapbG2u2SwupVY",
+          "name": "WhatsApp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://api.resmush.it/ws.php?img={{ $json.results[0].image.image_lg.replace('-1024x786','') }}&qlty=95",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Referer",
+              "value": "https://newkeys.link"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -288,
+        -432
+      ],
+      "id": "9d7c462f-3a77-4e0d-9031-c1e065275b0a",
+      "name": "imgOptimizer"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -64,
+        -336
+      ],
+      "id": "a0a8e2f7-3aef-4ca1-be8c-f650d981819f",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "wa-id"
+            },
+            {
+              "name": "stock"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -960,
+        -240
+      ],
+      "id": "ff67f9e0-e84a-40b1-97a0-7070c116764a",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1740210b-9a0e-4704-bc80-5b76399f68f9",
+              "leftValue": "={{ $json.results[0].stock_number }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -528,
+        -240
+      ],
+      "id": "3fb8baad-df66-4c3b-8351-1216aede77f7",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "errorType": "errorObject",
+        "errorObject": "={ \"Stock\":\"{{ $('When Executed by Another Workflow').item.json.stock }}\", \"error\": \"Stock number not found\"} "
+      },
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        -288,
+        -48
+      ],
+      "id": "d19f7ecd-8cb5-4bcc-96b9-f82d561e4830",
+      "name": "Stop and Error"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "getAuto": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Send template": {
+      "main": [
+        []
+      ]
+    },
+    "imgOptimizer": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Send template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "getAuto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "imgOptimizer",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Stop and Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c15c491e-898d-47b0-905f-c9d6b4a550e9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "57d9be6266bd70ab0ce4ade7669c86256cba66f28007bdeb1325dba00857b024"
+  },
+  "id": "QSG1DfNy3vvGFJ2W",
+  "tags": []
+}

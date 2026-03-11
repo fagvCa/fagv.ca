@@ -1,0 +1,1718 @@
+{
+  "name": "Sophia on WhatsApp",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {
+          "messageStatusUpdates": []
+        }
+      },
+      "id": "c61dbb94-60a2-4779-b369-1aedac9e7683",
+      "name": "WhatsApp Trigger",
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "position": [
+        384,
+        576
+      ],
+      "webhookId": "ab09ca3e-53b2-4079-9ddc-bccb2f69551b",
+      "typeVersion": 1,
+      "credentials": {
+        "whatsAppTriggerApi": {
+          "id": "bzXNXydS5lhR6T9I",
+          "name": "WhatsApp OAuth Sophia"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": true,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "26a3d85c-0815-48ff-85ce-713129a1107c",
+                    "operator": {
+                      "name": "filter.operator.equals",
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.messages[0].type }}",
+                    "rightValue": "audio"
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "Audio"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": true,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "2fc5c912-629b-4cbe-b5e3-7e3f0651c628",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.messages[0].type }}",
+                    "rightValue": "text"
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "Text"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": true,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "840b95b8-6559-4fb7-b32c-651451d6d0d2",
+                    "operator": {
+                      "name": "filter.operator.equals",
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.messages[0].type }}",
+                    "rightValue": "image"
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "Image"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": true,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "3e7a07f9-b785-450c-8c68-f6b276838503",
+                    "operator": {
+                      "name": "filter.operator.equals",
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.messages[0].type }}",
+                    "rightValue": "document"
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "Document"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "7cc6eee3-7640-441d-99ab-6bf537239559",
+                    "leftValue": "={{ $json.messages[0].type }}",
+                    "rightValue": "button",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Button reply"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "ee19ce3c-5f16-4473-81fb-4da3675633da",
+                    "leftValue": "={{ $json.statuses[0].status }}",
+                    "rightValue": "delivered",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "status"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "376030f6-6035-4372-aca0-0ccc9a741ad8",
+                    "leftValue": "={{ $json.messages[0].type }}",
+                    "rightValue": "interactive",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Interactive"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "654680ba-11a9-48b0-b70f-cd3fc4221219",
+      "name": "Route Types",
+      "type": "n8n-nodes-base.switch",
+      "position": [
+        1520,
+        992
+      ],
+      "typeVersion": 3.2
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "id": "ee5ee67e-6930-4364-bd47-766ed4bc19e4",
+      "name": "OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "position": [
+        2192,
+        848
+      ],
+      "typeVersion": 1.8,
+      "credentials": {
+        "openAiApi": {
+          "id": "hzsCGyIi4FVJeWrl",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "media",
+        "operation": "mediaUrlGet",
+        "mediaGetId": "={{ $json.messages[0].audio.id}}"
+      },
+      "id": "b9056f4e-428d-4888-958f-d24af1e4d07f",
+      "name": "Gets WhatsApp Voicemail Source URL",
+      "type": "n8n-nodes-base.whatsApp",
+      "position": [
+        1744,
+        848
+      ],
+      "webhookId": "bbe62f3d-8788-49d4-aae6-9e9411446d44",
+      "typeVersion": 1,
+      "credentials": {
+        "whatsAppApi": {
+          "id": "kobapbG2u2SwupVY",
+          "name": "WhatsApp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "whatsAppApi",
+        "options": {}
+      },
+      "id": "353b5489-a37e-423e-8224-e01bc2dba5f2",
+      "name": "Download Voicemail",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1968,
+        848
+      ],
+      "typeVersion": 4.2,
+      "credentials": {
+        "whatsAppApi": {
+          "id": "kobapbG2u2SwupVY",
+          "name": "WhatsApp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "38aec976-a32c-4b0e-85f4-c90adc16abc9",
+              "name": "text",
+              "type": "string",
+              "value": "={{ $json.messages[0].text.body }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b9d10b4a-54e4-43c5-848e-95caff770608",
+      "name": "Map text prompt",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        2192,
+        1040
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "737529652786856",
+        "recipientPhoneNumber": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}",
+        "textBody": "={{ $json.output }}",
+        "additionalFields": {
+          "previewUrl": false
+        }
+      },
+      "id": "c3d4c1a9-4f6e-40e6-ac0a-5c48e24bbe4d",
+      "name": "Send Response",
+      "type": "n8n-nodes-base.whatsApp",
+      "position": [
+        3088,
+        1040
+      ],
+      "webhookId": "23834751-5066-48ba-8e19-549680df2b27",
+      "typeVersion": 1,
+      "credentials": {
+        "whatsAppApi": {
+          "id": "kobapbG2u2SwupVY",
+          "name": "WhatsApp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "id": "334c7b15-64c9-40c2-bda7-1618fcd39c25",
+      "name": "Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        2544,
+        1296
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "hzsCGyIi4FVJeWrl",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "Call this tool to send a detailed info of a specific stock number. Example of questions from user:\n- Give me information of OP54375\n- Details of 5544A\n- Summary of stock P56248A",
+        "workflowId": {
+          "__rl": true,
+          "value": "QSG1DfNy3vvGFJ2W",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/QSG1DfNy3vvGFJ2W",
+          "cachedResultName": "Send WhatsApp Template"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "stock": "={{ $fromAI('stock', 'The stock number of the car') }}",
+            "wa-id": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "wa-id",
+              "displayName": "wa-id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "stock",
+              "displayName": "stock",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        2896,
+        1296
+      ],
+      "id": "5636f426-030c-45f5-8bb9-daf9b41bf582",
+      "name": "send-stock-card"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "38aec976-a32c-4b0e-85f4-c90adc16abc9",
+              "name": "text",
+              "type": "string",
+              "value": "={{ $json.messages[0].button.payload }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f6a5929b-62e0-41ca-bd06-c7c8a80f11f4",
+      "name": "Map text prompt1",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        2192,
+        1232
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "=wachat_{{ $('WhatsApp Trigger').item.json.contacts[0].wa_id }}",
+        "collectionName": "chatMemory",
+        "databaseName": "dbSophia",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryMongoDbChat",
+      "typeVersion": 1,
+      "position": [
+        2656,
+        1296
+      ],
+      "id": "04fbe8cb-72e1-4c99-bf37-376eb714b20b",
+      "name": "MongoDB Chat Memory",
+      "credentials": {
+        "mongoDb": {
+          "id": "0NQMY2WeWr9xh5sN",
+          "name": "MongoDB (Sophia)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "57d2e443-58af-4c93-a7a1-40c934352781",
+              "leftValue": "={{ $json.client_data.onboarded }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "852c9849-7d4d-4a7b-8872-0d42a519100e",
+              "leftValue": "={{ $json.client_data.onboarded }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1152,
+        560
+      ],
+      "id": "4ed4e21a-dbb4-468c-95e8-8cbafe289c35",
+      "name": "Is new contact?"
+    },
+    {
+      "parameters": {
+        "collection": "clients_data",
+        "options": {},
+        "query": "={\n    \"cellphone\": \"{{ $json.contacts[0].wa_id }}\"\n} "
+      },
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1.2,
+      "position": [
+        640,
+        240
+      ],
+      "id": "656b3507-b3fb-4e0d-a622-31526490f5d9",
+      "name": "Find client data",
+      "alwaysOutputData": true,
+      "credentials": {
+        "mongoDb": {
+          "id": "0NQMY2WeWr9xh5sN",
+          "name": "MongoDB (Sophia)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "numberInputs": 4,
+        "options": {
+          "includeUnpaired": true
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1008,
+        560
+      ],
+      "id": "203dc693-c2ae-4549-abc3-a57e7a51d9db",
+      "name": "Append client data"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-5-mini"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        2448,
+        704
+      ],
+      "id": "a04a146d-7fe6-408d-9cac-bc2c55cdcbbe",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "hzsCGyIi4FVJeWrl",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "ZOOzQmsPSJi77Dsc",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/ZOOzQmsPSJi77Dsc",
+          "cachedResultName": "Send Welcome Audio"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "wa_id": "={{ $json.cellphone }}",
+            "client_name": "={{ $json.preferred_name }}",
+            "lang": "={{ $json.def_lang }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "client_name",
+              "displayName": "client_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "wa_id",
+              "displayName": "wa_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "lang",
+              "displayName": "lang",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {
+          "waitForSubWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        3072,
+        544
+      ],
+      "id": "aaa4be8d-f250-421e-8818-ee3e6846f757",
+      "name": "Call 'Send Welcome Audio'"
+    },
+    {
+      "parameters": {
+        "operation": "findOneAndUpdate",
+        "collection": "clients_data",
+        "updateKey": "cellphone",
+        "fields": "preferred_name,cellphone,onboarded, def_lang",
+        "upsert": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1.2,
+      "position": [
+        3072,
+        400
+      ],
+      "id": "dd9989cb-4026-4a0c-9549-cdc20ed3c9fd",
+      "name": "Find and update documents",
+      "credentials": {
+        "mongoDb": {
+          "id": "0NQMY2WeWr9xh5sN",
+          "name": "MongoDB (Sophia)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "26a3d85c-0815-48ff-85ce-713129a1107c",
+                    "operator": {
+                      "name": "filter.operator.equals",
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.messages[0].type }}",
+                    "rightValue": "audio"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Audio"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2fc5c912-629b-4cbe-b5e3-7e3f0651c628",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.messages[0].type }}",
+                    "rightValue": "text"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Text"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "840b95b8-6559-4fb7-b32c-651451d6d0d2",
+                    "operator": {
+                      "name": "filter.operator.equals",
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.messages[0].type }}",
+                    "rightValue": "image"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Image"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "3e7a07f9-b785-450c-8c68-f6b276838503",
+                    "operator": {
+                      "name": "filter.operator.equals",
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.messages[0].type }}",
+                    "rightValue": "document"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Document"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "45357996-4377-4417-8065-af3b5fde3e95",
+                    "leftValue": "={{ $json.messages[0].interactive.nfm_reply }}",
+                    "rightValue": "nfm_reply",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "nfm_reply"
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "a4b563c8-93c4-462c-a9ad-1440ee60525a",
+      "name": "Route Types1",
+      "type": "n8n-nodes-base.switch",
+      "position": [
+        1440,
+        512
+      ],
+      "typeVersion": 3.2
+    },
+    {
+      "parameters": {
+        "resource": "media",
+        "operation": "mediaUrlGet",
+        "mediaGetId": "={{ $json.messages[0].audio.id}}"
+      },
+      "id": "74159447-4e76-444d-8545-9c659b0bc71c",
+      "name": "Gets WhatsApp Voicemail Source URL1",
+      "type": "n8n-nodes-base.whatsApp",
+      "position": [
+        1744,
+        368
+      ],
+      "webhookId": "bbe62f3d-8788-49d4-aae6-9e9411446d44",
+      "typeVersion": 1,
+      "credentials": {
+        "whatsAppApi": {
+          "id": "kobapbG2u2SwupVY",
+          "name": "WhatsApp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 0.5
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        560,
+        704
+      ],
+      "id": "9ec35895-5106-41ae-a21f-b96ab662a688",
+      "name": "Wait",
+      "webhookId": "1d9256af-73c9-429f-95e1-be02aa9af3c2"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "whatsAppApi",
+        "options": {}
+      },
+      "id": "b257da83-cb10-4e4a-88eb-c669dfd02522",
+      "name": "Download Audio",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1968,
+        368
+      ],
+      "typeVersion": 4.2,
+      "credentials": {
+        "whatsAppApi": {
+          "id": "kobapbG2u2SwupVY",
+          "name": "WhatsApp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "id": "55d0aa13-cf4c-48b4-a308-028cea6bb69e",
+      "name": "Transcribe Audio",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "position": [
+        2192,
+        368
+      ],
+      "typeVersion": 1.8,
+      "credentials": {
+        "openAiApi": {
+          "id": "hzsCGyIi4FVJeWrl",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7ac47dff-fad7-4a24-838d-712398e8dcf6",
+              "name": "preferred_name",
+              "value": "={{ $('Is new contact?').item.json.client_data.preferred_name }}",
+              "type": "string"
+            },
+            {
+              "id": "cda6235a-714a-4699-becf-c013386bdda4",
+              "name": "cellphone",
+              "value": "={{ $('Is new contact?').item.json.contacts[0].wa_id }}",
+              "type": "string"
+            },
+            {
+              "id": "fb9137b2-eefb-4875-aff6-9c214ae9c5c6",
+              "name": "onboarded",
+              "value": true,
+              "type": "boolean"
+            },
+            {
+              "id": "cdc2be4f-6324-433a-b78a-c5544be69c1e",
+              "name": "def_lang",
+              "value": "={{ $('Language Detector').item.json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2720,
+        544
+      ],
+      "id": "ae153326-74ea-43c3-b267-78723ee6b33c",
+      "name": "Fields Mapping"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"client_data\": {{ $json }}\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1024,
+        240
+      ],
+      "id": "683a16a1-eeda-43bf-99cd-68c05010af11",
+      "name": "Client Info"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// If no client data...\n\nif (!$input.item.json.cellphone) {\n    $input.item.json.cellphone = $('WhatsApp Trigger').first().json.contacts[0].wa_id;\n    $input.item.json.email = \"\";\n    $input.item.json.first_name = \"\";\n    $input.item.json.last_name = \"\";\n    $input.item.json.onboarded = false\n    $input.item.json.preferred_name = $('WhatsApp Trigger').first().json.contacts[0].profile.name;\n    $input.item.json.sex = \"X\";\n    $input.item.json.def_lang = \"en\";\n}\n\nreturn $input.item;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        832,
+        240
+      ],
+      "id": "d4611b19-a210-4797-8f79-ea3f7e5f34be",
+      "name": "If does not exist"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Search the used car inventory in MongoDB. Input must be a MongoDB query as a JSON string.",
+        "collection": "ucdInventory",
+        "options": {
+          "limit": 5,
+          "sort": "{\n  \"internet_price\":1,\n  \"year\":-1\n}",
+          "projection": "{\n    \"stock_number\": 1,\n    \"make\": 1,\n    \"model\": 1,\n    \"year\": 1,\n    \"trim\": 1,\n    \"exterior_color\": 1,\n    \"internet_price\": 1,\n    \"odometer\": 1,\n    \"fuel_type\": 1,\n    \"transmission\": 1,\n    \"body_style\": 1,\n    \"image\": 1,\n    \"vdp_url\": 1,\n    \"certified\": 1,\n    \"days_listed\": 1,\n    \"status\":1\n}"
+        },
+        "query": "={{ $fromAI('query', 'MongoDB query as a JSON string. Must include status filter to include ONLY \"Available\" vehicles.') }}"
+      },
+      "type": "n8n-nodes-base.mongoDbTool",
+      "typeVersion": 1.2,
+      "position": [
+        3008,
+        1296
+      ],
+      "id": "7d9e9d35-50b1-41ee-b3ad-20b032f8c145",
+      "name": "get-ucd-inventory",
+      "credentials": {
+        "mongoDb": {
+          "id": "0NQMY2WeWr9xh5sN",
+          "name": "MongoDB (Sophia)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Route Types1').item.json.messages[0].text.body || $('Transcribe Audio').item.json.text }}",
+        "options": {
+          "systemMessage": "You are a language detector.\nEvaluate the language used in User Message and ONLY answer with the ISO 639-1 code. Ej:\ninput: \"Hola Sophia cómo estás\"\nOutput: \"es\"\n\ninput: \"looking for a SUV\"\noutput: \"en\"\n\nThe languages ​​most frequently used by users here are: [es, en, hi, ar, fr] but many other languages could be used."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        2448,
+        544
+      ],
+      "id": "5ff09f82-9fb0-4c90-b88d-4c9c747597d0",
+      "name": "Language Detector"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.text || $json.message.text }}",
+        "options": {
+          "systemMessage": "=# Sophia AI Assistant System Prompt (n8n)\n\nYou are **Sophia**, a virtual auto sales assistant for **NewKeys Link**, a trusted brand among the Latin community in Ontario, Canada.  \nYou communicate with leads via **Telegram, WhatsApp, or SMS**.\n\n## Language Response Protocol\n\n**CRITICAL**: Always respond in the **same language** the user writes to you in.\n- If user writes in **Spanish** → respond in Spanish\n- If user writes in **English** → respond in English  \n- If user writes in **French** → respond in French\n- If user writes in **Arabic** → respond in Arabic\n- If user writes in **Hindi** → respond in Hindi\n- Match the user's language for ALL supported languages\n\n**Default language** (when unclear): Canadian English\n\nNever switch languages mid-conversation unless the user explicitly switches first.\n\n## Chat Memory Usage Formatting\n\nYou are usin MongoDB Chat Memory.\nDO NOT include tool usage details in 'messages[i].data.content'. Your response should only contain the actual message to the user.\n\nINCORRECT: \"[Used tools: Tool: get_user_info...] Hi Maria!\"\nCORRECT: \"Hi Maria!\"\n\nMove tool information to 'messages[i].data.tool_calls'\n\n## Available Tools\n\nYou have access to the following tools to assist users:\n\n### 1. `get-ucd-inventory` - MongoDB Inventory Search\n**Purpose**: Search used car inventory directly in MongoDB\n**Description**: Query the inventory database for available vehicles\n\n**CRITICAL - Tool Input Format**:\nYou MUST send ONLY a valid MongoDB query object as a JSON string in the \"query\" parameter.\n\n**Input Schema**:\n```json\n{\n  \"query\": \"<MongoDB Query Object as JSON String>\"\n}\n```\n\n**Examples of CORRECT tool calls**:\n\n1. Search for Elantra 2021 or newer:\n```json\n{\n  \"query\": \"{$and: [{ model: 'Elantra' }, { status: { $ne: 'sold' } }, { year: { $gte: 2021 } } ] }\"\n}\n```\n\n2. Search for cheapest Sedan:\n```json\n{\n  \"query\": \"{filter: {body_style: 'Sedan', status: {$ne: 'sold' } }, sort: {internet_price: 1 }, limit: 3 }\"\n}\n```\n\n2. Search for vehicles under $25,000:\n```json\n{\n  \"query\": \"{ status: { $ne: 'sold' }, internet_price: { $lte: 25000 } }\"\n}\n```\n\n3. Search for SUVs with low mileage:\n```json\n{\n  \"query\": \"{'status':{'$ne':'sold'},'body_style':'SUV','odometer':{'$lte':50000}}\"\n}\n```\n\n**Examples of INCORRECT tool calls**:\n\n1. Search for any Toyota or Honda available:\n```json\n{\n  \"query\": \"{'status':{'$ne':'sold'},'make':'Honda'},{'status':{'$ne':'sold'},'make':'Toyota'}\"\n}\n```\n\n**IMPORTANT RULES**:\n1. The query MUST be a stringified JSON object\n2. Always include `\"status\":{\"$ne\":\"sold\"}` to exclude sold vehicles\n3. Use MongoDB operators correctly: `$gte`, `$lte`, `$ne`, `$in`, etc.\n4. Field names must match exactly: `make`, `model`, `year`, `internet_price`, `odometer`, etc.\n\n### 2. `send-stock-card` - Send Vehicle Stock Card\n**Purpose**: Send a formatted vehicle information card directly to user's WhatsApp\n**When to use**: When user requests detailed information about a specific vehicle\n\n**Required Parameters**:\n- **wa-id**: User's WhatsApp session identifier (automatically extracted)\n- **stock**: Stock number from 'stock_number' field (e.g., \"OP54375\", \"P54621A\", \"55448\")\n\n**When to Call**:\n- User asks for info on specific stock: \"Give me info on stock OP54375\"\n- User wants details on previously mentioned vehicle: \"More details on that Tucson\"\n- User refers to numbered option: \"Send me details of option 2\"\n\n## Query Construction Guidelines\n\nWhen users ask about vehicles, convert their request to MongoDB query:\n\n### Natural Language → MongoDB Query Mapping:\n\n| User Says | MongoDB Query Field | MongoDB Operator |\n|-----------|-------------------|------------------|\n| \"under $X\" | `internet_price` | `{$lte: X}` |\n| \"over $X\" | `internet_price` | `{$gte: X}` |\n| \"less than X km\" | `odometer` | `{$lte: X}` |\n| \"2020 or newer\" | `year` | `{$gte: 2020}` |\n| \"2020 or older\" | `year` | `{$lte: 2020}` |\n| \"Hyundai\" | `make` | `\"Hyundai\"` |\n| \"Elantra\" | `model` | `\"Elantra\"` |\n| \"SUV\" | `body_style` | `\"SUV\"` |\n| \"AWD\" | `drive_train` | `\"AWD\"` |\n| \"automatic\" | `transmission` | `/automatic/i` |\n| \"red/blue/white\" | `exterior_color` | `/red/i` |\n\n### Query Building Examples:\n\n**User**: \"Show me Hyundai Elantras under $25,000\"\n**Query**: \n```json\n{\n  \"status\": {\"$ne\": \"sold\"},\n  \"make\": \"Hyundai\",\n  \"model\": \"Elantra\",\n  \"internet_price\": {\"$lte\": 25000}\n}\n```\n\n**User**: \"Todas las SUV 2022 que sean AWD y tengan de 60 a 80 mil km \"\n**Query**:\n```json\n{\n  \"status\": {\"$ne\": \"sold\"},\n    \"year\": 2022,\n    \"body_style\": \"SUV\",\n    \"drive_train\": \"AWD\",\n    \"odometer\":\n    {\n        \"$gte\": 60000,\n        \"$lte\": 80000\n    }\n}\n```\n\n**User**: \"Show me only sedans with CPO certificate\"\n**Query**: \n```json\n{\n  \"status\": {\"$ne\": \"sold\"},\n  \"body_style\": \"Sedan\",\n  \"certified\": 1\n}\n```\n\n**User**: \"I'm looking for a 7 passenger SUV any color no white\"\n**Query**: \n```json\n{\n  \"status\": {\"$ne\": \"sold\"},\n    \"passenger\": 7,\n    \"body_style\": \"SUV\",\n    \"exterior_color\":\n    {\n        \"$ne\": \"white\"\n    }\n}\n```\n\n## Inventory Response Management\n\n### CRITICAL: Wait for Real Data\n**NEVER generate fictional inventory**. Always:\n1. Call the `get-ucd-inventory` tool with appropriate query\n2. Wait for the actual response from MongoDB\n3. Process only the real vehicles returned\n4. If error or no results, use appropriate \"no availability\" message\n\n### When Vehicles ARE Found:\n**Multiple Vehicles**:\n- Present top 2-3 matches with REAL details from MongoDB response\n- Include: Year, Make, Model, Trim, Mileage, Price, Stock number\n- Mention total available: \"We have [X] units that match your search\"\n- Offer to send detailed stock card for specific vehicles\n\n**Single Vehicle**:\n- Provide actual details from the MongoDB document\n- Mention stock number for reference  \n- Offer to send detailed stock card\n\n### When NO Vehicles Are Found:\n\n**For Hyundai vehicles** (make=\"Hyundai\"):\n- **Spanish**: \"We are the highest volume dealer in Ontario, which means high turnover. The units matching your search have just been sold or reserved. Don't worry, let's schedule your appointment and I'll make sure to hold the units you need for that day. New units arrive and leave daily.\"\n- **English**: \"We're Ontario's highest volume dealer, which means high turnover. The units matching your search have just been sold or reserved. Don't worry, let's schedule your appointment and I'll make sure to hold the units you need for that day. New units arrive and leave daily.\"\n\n**For other brands** (make≠\"Hyundai\"):\n- **Spanish**: \"We're the #1 brand dealer and our space is mainly occupied with Hyundai vehicles. Don't worry, we handle all brands and just need to arrange some details to order the car you're looking for. Let's schedule a call with our agent so you can learn more about everything we can do for you.\"\n- **English**: \"We're the #1 brand dealer and our space is mainly occupied with Hyundai vehicles. Don't worry, we handle all brands and just need to arrange some details to order the car you're looking for. Let's schedule a call with our agent so you can learn more about everything we can do for you.\"\n\n### Vehicle Status Handling:\n- **\"Available\"**: Show details and encourage appointment\n- **\"SOLD\"**: Inform it's sold, offer alternatives\n- **\"HOLD\"**: Explain it's temporarily reserved, suggest alternatives\n\n## Your Capabilities\n\nYou can help users with:\n- **Appointment booking** – Secure in-person appointments at **Mississauga Hyundai** with Fabio or Luz Marina\n- **Auto financing guidance** – All profiles eligible (citizens, residents, newcomers, people without status, informal income)\n- **Inventory support** – Search real inventory via MongoDB Vector Store\n- **Process explanation** – Required documents, timelines, delivery, financing options\n\n**Finance Specialists**: We have 5+ expert finance specialists who handle all credit types, including challenging credit situations. Always reassure clients that a solution is possible.\n\n## Communication Style\n\n### Response Format\n- Keep responses **short, clear, and natural** (chat-style, not paragraphs)\n- **Professional, friendly, and confident** tone\n- **Personalize greetings** when user info available\n- Focus on **building trust and booking appointments**\n- Be concise but informative with inventory details\n\n### Voice Message Handling\n- Users may send transcribed voice messages\n- Respond naturally as if written directly\n- Don't mention transcription\n- Remember: You send audio ONLY for first contact via the Send Welcome Audio tool\n\n## Appointment Booking\n\n### Dealership Info\n- Address: 3045 Glen Erin Dr, Mississauga, ON, L5L 2J3\n- Name: Mississauga Hyundai\n- Website: www.mississaugahyundai.com\n- Dealer Hours: Mon-Thu 9:00 am to 9:00 pm | Fri-Sat 9:00 am to 6:00 pm | Sun closed\n\n### Fabio & Luz Marina Availability\n- **Regular hours**: Mon, Tue, Thu: 11:00 AM – 7:30 PM | Fri, Sat: 9:00 AM – 6:00 PM\n- **Day off Wednesdays**\n- **Flexible scheduling**: Can accommodate outside regular hours if coordinated\n- **Best day for promotions**: Saturdays\n\n### Appointment Language\nUse natural time references in user's language:\n- English: \"tomorrow\", \"this week\", \"Saturday\"\n- Spanish: \"mañana\", \"esta semana\", \"el sábado\"\n- Adapt for other languages accordingly\n\n## Context Awareness\n\n- Current date/time: **Today is {{ $now.format('cccc') }} the {{ $now.format('yyyy-MM-dd HH:mm') }}**  \n- Use for suggesting appointments and timelines\n- Reference days naturally in user's language\n\n## Important Guidelines\n\n### DO:\n- Send welcome audio on first contact only\n- Confirm and log **name, phone, and email**\n- Reassure about financing solutions with **5+ expert specialists**\n- Emphasize **newcomers and informal income workers are welcome**\n- Suggest not applying elsewhere to protect credit\n- Mention valid Canadian driver's license/ID requirement\n- Always use **real inventory data** from MongoDB\n- Encourage booking appointments first\n- Refer to website: **www.mississaugahyundai.com**\n\n### DON'T:\n- **NEVER invent or hallucinate vehicle inventory**\n- Never say financing is impossible\n- Never say a vehicle is unavailable without checking\n- Don't provide exact monthly payments (explain personalized offers in person)\n- Don't use example vehicles from this prompt as real inventory\n- Don't send audio messages except for the initial welcome\n\n## Sample Conversation Starters\n\n### Ongoing Conversation (NO Audio):\n\n**Spanish:**\n- \"¡Hola [preferred_name]! Soy Sophia from NewKeys Link. Qué tipo de auto estás buscando?\"\n\n**English:**\n- \"Hi [preferred_name]! I'm Sophia from NewKeys Link. What kind of vehicle are you looking for?\"\n\n## WhatsApp Message Formatting Rules\n\n### CRITICAL: You MUST use WhatsApp formatting, NOT Markdown\n\n**Available WhatsApp Formatting**:\n- **Bold**: Use *text* (single asterisk)\n- **Italic**: Use _text_ (single underscore)\n- **Strikethrough**: Use ~text~ (single tilde)\n- **Monospace/Code**: Use ```text``` (three backticks)\n\n**NEVER USE**:\n- ❌ Double asterisks **text** (this shows as literal asterisks)\n- ❌ Markdown headers like # or ##\n- ❌ Markdown links [text](url)\n- ❌ Regular links (url)\n- ❌ HTML tags\n- ❌ Bullet points with - or *\n\n**DO USE**:\n- ✅ Numbers for lists: 1. 2. 3.\n- ✅ Simple line breaks for spacing\n- ✅ Emojis for visual appeal 🚗 ✨ ✅ 📍 📞\n\n### Vehicle Listing Format Example\n\n*CORRECT WhatsApp Format:*\n```\n🚗 *2022 Hyundai Elantra Preferred*\n📊 Stock: P54621A\n💰 Price: $24,995\n📏 Mileage: 45,000 km\n🎨 Color: White\n⚙️ Transmission: Automatic\n\n✅ Available for viewing\n```\n\n*INCORRECT Markdown Format:*\n```\n## 2022 Hyundai Elantra Preferred\n- **Stock**: P54621A\n- **Price**: $24,995\n```\n\n### Response Templates for WhatsApp\n\nNever send links in this responses.\n**Multiple Vehicles Found:**\n```\n¡Encontré *{{count}} vehículos* que coinciden con tu búsqueda! 🚗\n\n*Opción 1:*\n{{year}} {{make}} {{model}}\n💰 ${{price}}\n📏 {{mileage}} km\n📊 Stock: {{stock}}\n\n*Opción 2:*\n{{year}} {{make}} {{model}}\n💰 ${{price}}\n📏 {{mileage}} km\n📊 Stock: {{stock}}\n\n¿Te gustaría más detalles de alguno? Puedo enviarte la ficha completa 📱\n```\n\n**Single Vehicle Found:**\n```\n✅ *Tengo exactamente lo que buscas:*\n\n🚗 *{{year}} {{make}} {{model}}*\n{{trim}}\n\n💰 Precio: ${{price}}\n📏 Kilometraje: {{mileage}} km\n🎨 Color: {{color}}\n⚙️ Transmisión: {{transmission}}\n📊 Stock: {{stock}}\n\n¿Quieres que te envíe la ficha completa con fotos?\n```\n\n**No Vehicles Found (Hyundai):**\n```\nSomos el dealer de mayor volumen de ventas en Ontario y por esto la rotación es alta 📈\n\nEn este momento las unidades que se ajustan a tu búsqueda acaban de ser vendidas o separadas.\n\n*No te preocupes* 💪, programemos tu cita y estaré atento para sostener las unidades que necesites para ese día.\n\n_Todos los días llegan y salen unidades._\n\n¿Cuándo podrías venir? Tenemos disponibilidad:\n📅 Lunes, Martes y Jueves: 11:30 AM - 7:30 PM\n📅 Viernes y Sábado: 9:00 AM - 6:00 PM\n```\n\n---\n\n**Primary Goal**: Build trust and secure an in-person appointment with Fabio or Luz Marina at Mississauga Hyundai using REAL inventory data from MongoDB.\n",
+          "returnIntermediateSteps": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        2656,
+        1040
+      ],
+      "id": "8a841244-79ff-460b-b897-c5fde81de11f",
+      "name": "Sophia AI"
+    },
+    {
+      "parameters": {
+        "description": "=Crea una cita real para el cliente.\nRequiere parámetros:\n\ncustomer_name\nphone\ndate\ntime\n\nDebes validarlos antes de llamar la herramienta.\nSolo llamar cuando el cliente confirme fecha y hora.\nRetorna success si la respuesta del workflow es \"confirmed\". \nRespuesta del workflow: {{ $('book-an-appointment').json.data.status }}",
+        "workflowId": {
+          "__rl": true,
+          "value": "KgppMLHxmnrfwmBQ",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/KgppMLHxmnrfwmBQ",
+          "cachedResultName": "Book Appointment"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "start": "={{ $fromAI('start', 'The appointment time in the format \"2025-12-01T14:30:00.000-05:00\"') }}",
+            "client_email": "={{ $fromAI('client_email', '(Mandatory) The client\\'s email') }}",
+            "client_name": "={{ $fromAI('client_name', 'The client\\'s name') }}",
+            "salesperson": "={{ $fromAI('salesperson', '(Optional) If the client prefers a salesperson', \"string\", \"Fabio Gomez\") }}",
+            "wa_id": "={{ $fromAI('wa_id', 'The phone number of the client. Only numbers with area code included') }}",
+            "lead_id": "={{ $fromAI('lead_id', '(Optional) When the info from DB include it.', \"string\", \"No Stock\") }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "start",
+              "displayName": "start",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "client_email",
+              "displayName": "client_email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "client_name",
+              "displayName": "client_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "salesperson",
+              "displayName": "salesperson",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "wa_id",
+              "displayName": "wa_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "lead_id",
+              "displayName": "lead_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        2784,
+        1296
+      ],
+      "id": "8a2edc63-ca5d-449b-af52-c39f31c227e1",
+      "name": "book-an-appointment"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://graph.facebook.com/v22.0/737529652786856/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "whatsAppApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "messaging_product",
+              "value": "whatsapp"
+            },
+            {
+              "name": "message_id",
+              "value": "={{ $('WhatsApp Trigger').item.json.messages[0].id }}"
+            },
+            {
+              "name": "typing_indicator",
+              "value": "{ \"type\": \"text\" }"
+            },
+            {
+              "name": "status",
+              "value": "read"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        752,
+        704
+      ],
+      "id": "2f941e2b-55e0-4381-8aa8-c2a89381d795",
+      "name": "Show typing",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "kobapbG2u2SwupVY",
+          "name": "WhatsApp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "timezone": "America/Toronto"
+        }
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        560,
+        896
+      ],
+      "id": "d00dfb25-15d7-47d8-873e-c9fe670a33dc",
+      "name": "Date and Time"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const d = new Date($json.currentDate);\n\nconst r = {\n    \"current_datetime\": new Intl.DateTimeFormat(\"en-CA\", {\n        dateStyle: \"full\",\n        timeStyle: \"long\",\n        timeZone: \"America/Toronto\",\n    }).format(d)\n}\n\nreturn r;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        752,
+        896
+      ],
+      "id": "5f198034-3d68-4139-838b-8c6441235280",
+      "name": "Formatted Date"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e9a2ea58-f33a-45cd-afb0-bff66c1b7480",
+              "name": "data",
+              "value": "={{ $json.messages[0].interactive.nfm_reply.response_json }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1696,
+        624
+      ],
+      "id": "57ea57f4-e75c-4424-ad6c-556a318924e6",
+      "name": "Edit Fields1"
+    }
+  ],
+  "pinData": {
+    "WhatsApp Trigger": [
+      {
+        "json": {
+          "messaging_product": "whatsapp",
+          "metadata": {
+            "display_phone_number": "12495000404",
+            "phone_number_id": "737529652786856"
+          },
+          "contacts": [
+            {
+              "profile": {
+                "name": "Fabio Gómez"
+              },
+              "wa_id": "14372187470"
+            }
+          ],
+          "messages": [
+            {
+              "from": "14372187469",
+              "id": "wamid.HBgLMTQzNzIxODc0NjkVAgASGCBBNUFBOUQ4QUMyQjZDRjA5RUVBRjczQjM5OEM5OTc5QgA=",
+              "timestamp": "1763854960",
+              "text": {
+                "body": "🇪🇸 Hola Sophía, ¿puedes ayudarme?"
+              },
+              "type": "text"
+            }
+          ],
+          "field": "messages"
+        }
+      }
+    ],
+    "Route Types1": [
+      {
+        "json": {
+          "client_data": {
+            "cellphone": "15489000101",
+            "email": "",
+            "first_name": "",
+            "last_name": "",
+            "onboarded": false,
+            "preferred_name": "Plinio Driver 🚘🚐🚗",
+            "sex": "X",
+            "def_lang": "en"
+          },
+          "messaging_product": "whatsapp",
+          "metadata": {
+            "display_phone_number": "12495000404",
+            "phone_number_id": "737529652786856"
+          },
+          "contacts": [
+            {
+              "profile": {
+                "name": "Plinio Driver 🚘🚐🚗"
+              },
+              "wa_id": "15489000101"
+            }
+          ],
+          "messages": [
+            {
+              "context": {
+                "from": "12495000404",
+                "id": "wamid.HBgLMTU0ODkwMDAxMDEVAgARGCBBQzUyMjRGOUExRjBDNUVDOEVDMzg5RDBEQkFCRjcyQQA="
+              },
+              "referral": {
+                "source_url": "https://fb.me/7xg6Y8j9u",
+                "source_id": "120240503287510344",
+                "source_type": "ad",
+                "body": "Browse quality used vehicles near you. Chat instantly to check availability & book a test drive.",
+                "headline": "$50,995 2024 Palisade",
+                "media_type": "image",
+                "image_url": "https://scontent.xx.fbcdn.net/v/t45.5328-4/636715722_1842915899730729_2009259736380713510_n.jpg?stp=c53.0.320.320a_dst-jpg_p320x320_tt6&_nc_cat=105&ccb=1-7&_nc_sid=ac0cca&_nc_ohc=LF8VWAqhfwcQ7kNvwGNrfaH&_nc_oc=AdkERa_SsP5ELi9eFYRRRF_L7c4bxJTfnpYS5m969_JuFqCTTWj2dROxHfUj9Mg3mgkgIpgHTHhisl7Nb_Cpd7-D&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.xx&_nc_gid=3yfygEKO-rXpUNOXg9ZAgg&oh=00_AfuTLSWS-5_7O2T3dBVf2FVBARyVPv83B_bKnXfEPyXFZw&oe=699C8F44",
+                "ctwa_clid": "AffXzRQ_3ScbHl_21_PnmZgUO0xtr68RWCAg7-OiRY91-eavuISwUJDduvieIYZW6Jm9vhxA8zjYK1hxQKQLZknEPd3IxT2Y8rdduwJoTU1NlQ05jqBXZSmCNojp-SDhDA",
+                "welcome_message": {
+                  "text": "Check availability, pricing & financing options instantly.\nStart here to get personalized assistance.",
+                  "button": {
+                    "text": "Get started",
+                    "type": "flow"
+                  }
+                }
+              },
+              "from": "15489000101",
+              "id": "wamid.HBgLMTU0ODkwMDAxMDEVAgASGCBBQzczQjhFOTlBRTFEQTJFNkUzMTBFQjY0NTg2MTdGNQA=",
+              "timestamp": "1771488810",
+              "type": "interactive",
+              "interactive": {
+                "type": "nfm_reply",
+                "nfm_reply": {
+                  "response_json": "{\"screen_0_Full_Name_0\":\"Fernando Gonz\\u00e1lez \",\"screen_0_Email_1\":\"pacheco\\u0040a4b.ca\",\"screen_0_Prefrred_Language_2\":\"4_Spanish\",\"flow_token\":\"7be4d4ca-58c0-487e-98cc-4759eed45aaa\"}",
+                  "body": "Sent",
+                  "name": "flow"
+                }
+              }
+            }
+          ],
+          "field": "messages",
+          "success": true,
+          "current_datetime": "Thursday, February 19, 2026 at 3:13:33 a.m. EST"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "WhatsApp Trigger": {
+      "main": [
+        [
+          {
+            "node": "Append client data",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "Find client data",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Date and Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gets WhatsApp Voicemail Source URL": {
+      "main": [
+        [
+          {
+            "node": "Download Voicemail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Voicemail": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route Types": {
+      "main": [
+        [
+          {
+            "node": "Gets WhatsApp Voicemail Source URL",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Map text prompt",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        [],
+        [
+          {
+            "node": "Map text prompt1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        []
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Sophia AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Map text prompt": {
+      "main": [
+        [
+          {
+            "node": "Sophia AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Sophia AI",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "send-stock-card": {
+      "ai_tool": [
+        [
+          {
+            "node": "Sophia AI",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Map text prompt1": {
+      "main": [
+        [
+          {
+            "node": "Sophia AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MongoDB Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Sophia AI",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is new contact?": {
+      "main": [
+        [
+          {
+            "node": "Route Types1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Route Types",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find client data": {
+      "main": [
+        [
+          {
+            "node": "If does not exist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append client data": {
+      "main": [
+        [
+          {
+            "node": "Is new contact?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Language Detector",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route Types1": {
+      "main": [
+        [
+          {
+            "node": "Gets WhatsApp Voicemail Source URL1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Language Detector",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        [],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gets WhatsApp Voicemail Source URL1": {
+      "main": [
+        [
+          {
+            "node": "Download Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Show typing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Audio": {
+      "main": [
+        [
+          {
+            "node": "Transcribe Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe Audio": {
+      "main": [
+        [
+          {
+            "node": "Language Detector",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fields Mapping": {
+      "main": [
+        [
+          {
+            "node": "Call 'Send Welcome Audio'",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Find and update documents",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Client Info": {
+      "main": [
+        [
+          {
+            "node": "Append client data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If does not exist": {
+      "main": [
+        [
+          {
+            "node": "Client Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get-ucd-inventory": {
+      "ai_tool": [
+        [
+          {
+            "node": "Sophia AI",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Language Detector": {
+      "main": [
+        [
+          {
+            "node": "Fields Mapping",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sophia AI": {
+      "main": [
+        [
+          {
+            "node": "Send Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "book-an-appointment": {
+      "ai_tool": [
+        [
+          {
+            "node": "Sophia AI",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Show typing": {
+      "main": [
+        [
+          {
+            "node": "Append client data",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Date and Time": {
+      "main": [
+        [
+          {
+            "node": "Formatted Date",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formatted Date": {
+      "main": [
+        [
+          {
+            "node": "Append client data",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "PPmpWfGn7BumH093",
+    "saveExecutionProgress": true,
+    "executionTimeout": 30,
+    "availableInMCP": false
+  },
+  "versionId": "7d844459-0893-45f0-acf5-5b7224a10a7d",
+  "meta": {
+    "templateId": "voice_assistant_agent_with_telegram",
+    "templateCredsSetupCompleted": true,
+    "instanceId": "57d9be6266bd70ab0ce4ade7669c86256cba66f28007bdeb1325dba00857b024"
+  },
+  "id": "PPmpWfGn7BumH093",
+  "tags": [
+    {
+      "updatedAt": "2025-10-02T00:57:58.151Z",
+      "createdAt": "2025-10-02T00:57:58.151Z",
+      "id": "uiffWimArCgY5nFW",
+      "name": "virtualAgent"
+    }
+  ]
+}

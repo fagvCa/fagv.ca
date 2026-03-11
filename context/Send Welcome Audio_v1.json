@@ -1,0 +1,161 @@
+{
+  "name": "Send Welcome Audio",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "client_name"
+            },
+            {
+              "name": "wa_id"
+            },
+            {
+              "name": "lang"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -160,
+        32
+      ],
+      "id": "bd20cf5d-15cb-4e3c-b6e3-d79f361b933b",
+      "name": "Invoke Welcome Audio"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Input language code from previous node\nconst _lang = $input.first().json.lang || \"es\";\n// Get client name safely from input\nconst rawName = $input.first().json.client_name;\nconst _wa_id = $input.first().json.wa_id;\n\n// If the name exists and is a non-empty string → use it\n// Otherwise → use an empty string \"\"\nconst clientName = (rawName && typeof rawName === \"string\") ? rawName : \"\";\n\n// Text templates for each language\nconst messages = {\n  en: `How are you, ${clientName}?\nI'm Sophia, your virtual assistant from NewKeys Link.\nI’m here to help you find the perfect car for you:\nI can give you prices, mileage, features, compare models, review financing options, and also book your test-drive appointment.\nTell me, what kind of vehicle are you looking for?`,\n\n  hi: `कैसे हैं आप, ${clientName}?\nमैं सोफ़िया हूँ, आपकी वर्चुअल असिस्टेंट, NewKeys Link से।\nमैं यहाँ आपकी मदद करने के लिए हूँ ताकि आप अपने लिए सही कार चुन सकें:\nमैं आपको कीमतें, माइलेज, फीचर्स, मॉडल तुलना, फ़ाइनेंसिंग विकल्प बता सकती हूँ, और आपका टेस्ट-ड्राइव अपॉइंटमेंट भी बुक कर सकती हूँ।\nबताइए, आप किस तरह की गाड़ी ढूंढ रहे हैं?`,\n\n  ar: `كيف حالك ${clientName}؟\nأنا صوفيا، مساعدتك الافتراضية من NewKeys Link.\nأنا هنا لأساعدك في العثور على السيارة المثالية لك:\nأستطيع أن أقدّم لك الأسعار، وعدد الكيلومترات، والمواصفات، ومقارنة الموديلات، وخيارات التمويل، وكذلك حجز موعد اختبار القيادة لك.\nأخبرني، ما نوع السيارة التي تبحث عنها؟`,\n\n  fr: `Comment allez-vous, ${clientName} ?\nJe suis Sophia, votre assistante virtuelle chez NewKeys Link.\nJe suis ici pour vous aider à trouver la voiture idéale pour vous :\nje peux vous donner les prix, le kilométrage, les caractéristiques, comparer les modèles, vérifier les options de financement, et aussi réserver votre rendez-vous pour un essai routier.\nDites-moi, quel type de véhicule recherchez-vous ?`,\n\n  // Fallback to Spanish if code doesn't match\n  es: `Cómo estás ${clientName}.\nSoy Sofía tu asistente virtual de NewKeys Link.\nEstoy aquí para ayudarte a conseguir el carro ideal para ti:\npuedo darte precios, kilometraje, características, comparar modelos, revisar opciones de financiamiento y también agendarte una cita para tu test drive.\nCuéntame qué tipo de vehículo estás buscando.`\n};\n\n// Determine the message to output\nconst _message = messages[_lang] || messages.es;\n\n// Return as n8n output\nreturn [{ message: _message, lang: _lang, wa_id: _wa_id }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        64,
+        32
+      ],
+      "id": "24fa3120-77d3-46bd-b0ee-2e6e456de0dd",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "9gUFqaldRZxCwhUh",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/9gUFqaldRZxCwhUh",
+          "cachedResultName": "Send WhatsApp Audio"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "message": "={{ $json.message }}",
+            "wa_id": "={{ $json.wa_id }}",
+            "lang": "={{ $json.lang }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "wa_id",
+              "displayName": "wa_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "lang",
+              "displayName": "lang",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        288,
+        32
+      ],
+      "id": "c6d82523-bf7e-418b-aac4-26f1e62687bf",
+      "name": "Call 'Send WhatsApp Audio'"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Invoke Welcome Audio": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Call 'Send WhatsApp Audio'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f41a96b3-948b-4510-901a-46ceed2d7ccc",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "57d9be6266bd70ab0ce4ade7669c86256cba66f28007bdeb1325dba00857b024"
+  },
+  "id": "ZOOzQmsPSJi77Dsc",
+  "tags": [
+    {
+      "updatedAt": "2025-10-02T00:57:58.151Z",
+      "createdAt": "2025-10-02T00:57:58.151Z",
+      "id": "uiffWimArCgY5nFW",
+      "name": "virtualAgent"
+    },
+    {
+      "updatedAt": "2025-11-20T18:23:37.307Z",
+      "createdAt": "2025-11-20T18:23:37.307Z",
+      "id": "wgXrMWK71sFH6xi4",
+      "name": "Sophia"
+    },
+    {
+      "updatedAt": "2025-10-05T07:40:17.974Z",
+      "createdAt": "2025-10-05T07:40:17.974Z",
+      "id": "xCdfZWOxtL8nEXFg",
+      "name": "WhatsApp"
+    }
+  ]
+}
