@@ -1,88 +1,131 @@
 import type { Metadata } from "next"
+import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { ImagePlaceholder } from "@/components/image-placeholder"
-import { CheckCircle2, Globe, MessageSquare, Calendar, Users, TrendingUp, Clock, Languages, Plug } from "lucide-react"
+import {
+  CheckCircle2,
+  Globe,
+  MessageSquare,
+  Calendar,
+  Users,
+  Mic,
+  Clock,
+  TrendingUp,
+  Plug,
+  FileText,
+  ExternalLink,
+  RefreshCw,
+  Megaphone,
+} from "lucide-react"
 
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "AI agent and automation projects built for real-world production environments.",
+    "AI agent and automation systems built for production — Sophia AI, Financial Document AI, and supporting automation infrastructure.",
 }
 
 const sophiaTech = [
   "n8n orchestration",
   "Node.js microservices",
-  "OpenAI API",
+  "OpenAI GPT-4o + Whisper",
+  "ElevenLabs multilingual TTS",
   "WhatsApp Business Cloud API",
+  "MongoDB Atlas (chat memory + inventory)",
+  "Nylas Calendar API",
+  "Meta Lead Ads webhooks",
   "Google Sheets API",
-  "Meta Lead Ads integration",
 ]
 
 const sophiaOutcomes = [
   {
     icon: Clock,
-    metric: "< 30 seconds",
+    metric: "< 30 s",
     label: "Lead response time",
     detail: "Down from 2–4 hours of manual follow-up",
   },
   {
     icon: Globe,
-    metric: "3 languages",
-    label: "Conversation support",
-    detail: "English, and Spanish — auto-detected",
+    metric: "30+",
+    label: "Languages supported",
+    detail: "Auto-detected via LangChain language classifier",
   },
   {
     icon: TrendingUp,
     metric: "24/7",
     label: "Autonomous operation",
-    detail: "No human required for routine qualification flows",
+    detail: "Zero human required for routine qualification flows",
   },
   {
     icon: Plug,
-    metric: "6 systems",
-    label: "Integrated in one pipeline",
-    detail: "Meta Ads → WhatsApp → OpenAI → Calendar → Sheets → CRM",
+    metric: "9",
+    label: "Integrated systems",
+    detail: "OpenAI, ElevenLabs, Nylas, MongoDB, WhatsApp, Meta, Sheets & more",
   },
 ]
 
 const sophiaCapabilities = [
   {
     icon: Globe,
-    title: "Multilingual Conversation",
+    title: "Multilingual Conversation (30+)",
     description:
-      "Handles inbound and outbound conversations in English, Spanish, or one of many other languages — automatically detecting language and adapting responses.",
+      "Detects language automatically on every message and responds in the customer's own language. Supports 30+ languages via OpenAI GPT-4o with a dedicated language-classifier agent running before each LLM call.",
   },
   {
     icon: MessageSquare,
     title: "Lead Qualification Workflows",
     description:
-      "Qualifies incoming leads from Meta Lead Ads through structured conversation flows, scoring intent and routing to the correct sales process.",
+      "Classifies inbound leads from Meta Lead Ads by intent and routes through structured n8n qualification workflows. Intent classification separates inventory queries, scheduling requests, and escalation paths before the main agent responds.",
   },
   {
     icon: CheckCircle2,
     title: "Real-Time Inventory Queries",
     description:
-      "Queries live inventory data to answer customer questions about vehicle availability, pricing, and specifications without human intervention.",
+      "Agent queries a MongoDB inventory collection using tool-use / function calling — the LLM generates the query, executes it, and returns a formatted vehicle card (image, price, specs, action buttons) via WhatsApp template messages.",
   },
   {
     icon: Calendar,
-    title: "Automated Appointment Booking",
+    title: "Appointment Booking via Nylas",
     description:
-      "Schedules test drives and service appointments directly within the conversation, syncing with the dealership calendar in real time.",
+      "Books test drives and appointments by calling the Nylas Calendar API sub-workflow. The agent extracts appointment time (ISO 8601), client name, email, and salesperson preference via $fromAI() and creates a calendar event with all participant metadata.",
+  },
+  {
+    icon: Mic,
+    title: "Voice Audio Greetings (ElevenLabs)",
+    description:
+      "On first contact, sends a personalized voice audio greeting in the customer's language using ElevenLabs eleven_multilingual_v2. Uses language-specific voice models and delivers via WhatsApp audio message. Audio session is stored in MongoDB chat memory.",
   },
   {
     icon: Users,
-    title: "CRM Synchronization",
+    title: "Persistent Session Memory",
     description:
-      "Writes lead data and conversation summaries to Google Sheets and downstream CRM systems, maintaining a complete audit trail.",
+      "Each conversation is stored in MongoDB (dbSophia / chatMemory collection), keyed by WhatsApp ID. The agent retrieves the last 10 messages as context on every turn — maintaining continuity across disconnected sessions.",
+  },
+]
+
+const additionalAutomations = [
+  {
+    icon: FileText,
+    title: "Financial Document AI",
+    badge: "Google Cloud",
+    description:
+      "Implemented Google Cloud Document AI processors to automate data extraction from automotive funding forms (credit applications, lease agreements). Replaced manual data entry with structured field extraction, reducing errors by 90%.",
   },
   {
-    icon: Languages,
-    title: "Human Escalation Routing",
+    icon: RefreshCw,
+    title: "Pricing Audit Agents",
+    badge: "Internal Tool",
     description:
-      "Detects ambiguous intent or complex edge cases and routes to a human agent with full conversation context — preserving the relationship without information loss.",
+      "Agents that compare manual internal pricing records against live dealership website data on a scheduled basis. Detects discrepancies and alerts management of inconsistencies automatically — no manual audit required.",
+  },
+  {
+    icon: Megaphone,
+    title: "Meta Ad Catalog Automation",
+    badge: "Marketing",
+    description:
+      "Automated dynamic retargeting campaign catalog generation via CSV manipulation and Meta Ads API. Inventory changes automatically propagate to active ad campaigns without manual intervention.",
   },
 ]
 
@@ -103,33 +146,47 @@ export default function ProjectsPage() {
       <div className="space-y-10">
         {/* Header */}
         <div>
-          <div className="flex items-center gap-2 mb-1">
+          <div className="flex flex-wrap items-center gap-2 mb-2">
             <Badge className="text-xs">Featured Project</Badge>
             <Badge variant="outline" className="text-xs text-green-700 border-green-200 bg-green-50">
               Production · Active
             </Badge>
           </div>
-          <h2 className="text-2xl font-bold tracking-tight text-foreground mt-2">
+          <h2 className="text-2xl font-bold tracking-tight text-foreground">
             Sophia — Autonomous Multilingual AI Sales Agent
           </h2>
           <p className="mt-4 text-muted-foreground leading-relaxed max-w-3xl">
-            Sophia is a production-deployed AI conversational agent built to automate the
-            automotive sales process from initial lead capture through appointment
-            scheduling. Operating entirely over WhatsApp Business, Sophia manages
-            multilingual conversations, qualifies leads, answers product questions, and
-            books appointments — without requiring human intervention for routine
-            interactions.
+            Sophia is a production AI conversational agent operating over WhatsApp Business
+            to automate the automotive sales process from initial lead capture through
+            appointment scheduling. She manages multilingual conversations, qualifies leads,
+            queries live inventory, and books appointments — without human intervention for
+            routine interactions.
           </p>
           <p className="mt-3 text-muted-foreground leading-relaxed max-w-3xl">
-            The system was designed independently as an automation layer on top of existing
-            dealership operations, integrating with Meta Lead Ads, Google Sheets, and the
-            dealership&apos;s internal calendar. It handles real-time inventory lookups,
-            dynamic pricing responses, and routes complex cases to human agents when
-            necessary.
+            The system ingests inbound leads from Meta Lead Ads via webhook, routes them
+            through n8n orchestration workflows, and uses a LangChain agent with three
+            registered tools: <code className="text-xs bg-muted px-1 py-0.5 rounded font-mono">get-ucd-inventory</code> (MongoDB query), <code className="text-xs bg-muted px-1 py-0.5 rounded font-mono">send-stock-card</code> (WhatsApp template dispatch), and <code className="text-xs bg-muted px-1 py-0.5 rounded font-mono">book-an-appointment</code> (Nylas Calendar API). Audio messages are transcribed by OpenAI Whisper before being processed.
           </p>
+
+          {/* Live demo CTA */}
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <Button asChild size="sm">
+              <a
+                href="https://wa.me/12495000404?text=test"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ExternalLink className="size-3.5" />
+                Try Sophia on WhatsApp
+              </a>
+            </Button>
+            <p className="text-xs text-muted-foreground">
+              Live agent — tap the button and send a message to interact with Sophia directly.
+            </p>
+          </div>
         </div>
 
-        {/* Outcome metrics — this is what makes it credible */}
+        {/* Outcome metrics */}
         <div>
           <h3 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-4">
             Project Outcomes
@@ -157,42 +214,33 @@ export default function ProjectsPage() {
         {/* Architecture diagram placeholders */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <ImagePlaceholder
-            label="Architecture diagram — Sophia AI orchestration workflow"
-            description="Insert a high-level architecture diagram showing: Meta Lead Ads → n8n Orchestrator → OpenAI API → WhatsApp Business Cloud API → Google Sheets."
+            label="n8n workflow canvas — Sophia main orchestration workflow"
+            description="Insert a perspective screenshot of the Sophia on WhatsApp_v11 n8n workflow showing nodes: WhatsApp Trigger → Route Types → Language Detector → Sophia AI agent → sub-workflow calls."
             aspectRatio="video"
           />
           <ImagePlaceholder
-            label="n8n workflow screenshot"
-            description="Insert a screenshot of the main n8n workflow canvas showing the Sophia agent automation nodes and routing logic."
+            label="WhatsApp conversation screenshot — Sophia in action"
+            description="Insert a screenshot of a live Sophia conversation: lead arrives, inventory query, vehicle card template, appointment booking confirmation."
             aspectRatio="video"
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <ImagePlaceholder
-            label="System interaction diagram"
-            description="Insert a sequence diagram: Lead arrives → Agent qualifies → Inventory query → Appointment booked → CRM updated."
-            aspectRatio="video"
-            className="md:col-span-1"
-          />
-          <div className="md:col-span-2 flex flex-col gap-4">
-            <Card className="gap-4">
-              <CardHeader className="pb-0">
-                <CardTitle className="text-base">Technology Stack</CardTitle>
-                <CardDescription>Core tools and APIs powering Sophia</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  {sophiaTech.map((tech) => (
-                    <Badge key={tech} variant="secondary" className="font-mono text-xs">
-                      {tech}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+        {/* Tech stack */}
+        <Card className="gap-4">
+          <CardHeader className="pb-0">
+            <CardTitle className="text-base">Full Technology Stack</CardTitle>
+            <CardDescription>Every service integrated in the Sophia system</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-wrap gap-2">
+              {sophiaTech.map((tech) => (
+                <Badge key={tech} variant="secondary" className="font-mono text-xs">
+                  {tech}
+                </Badge>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
 
         <Separator />
 
@@ -225,23 +273,62 @@ export default function ProjectsPage() {
 
         <Separator />
 
-        {/* Second project — placeholder */}
+        {/* Additional automations */}
         <div>
-          <div className="flex items-center gap-2 mb-4">
-            <Badge variant="outline" className="text-xs">In Development</Badge>
+          <h2 className="text-xl font-bold tracking-tight text-foreground mb-2">
+            Additional Automation Systems
+          </h2>
+          <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl mb-6">
+            Beyond Sophia, a suite of supporting automation systems was built across
+            the same dealership operation — each solving a distinct operational problem.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            {additionalAutomations.map((item) => {
+              const Icon = item.icon
+              return (
+                <Card key={item.title} className="gap-4">
+                  <CardHeader className="pb-0">
+                    <div className="flex items-start gap-3">
+                      <div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground mt-0.5">
+                        <Icon className="size-4" />
+                      </div>
+                      <div>
+                        <CardTitle className="text-sm">{item.title}</CardTitle>
+                        <Badge variant="outline" className="text-[10px] mt-1">{item.badge}</Badge>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-xs leading-relaxed">
+                      {item.description}
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              )
+            })}
+          </div>
+        </div>
+
+        <Separator />
+
+        {/* NewKeys.Link predecessor */}
+        <div>
+          <div className="flex items-center gap-2 mb-3">
+            <Badge variant="outline" className="text-xs">Predecessor System</Badge>
           </div>
           <h3 className="text-lg font-semibold text-foreground mb-2">
-            Automation Workflow Library
+            NewKeys.Link — Node.js Lead Processing Engine
           </h3>
-          <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl mb-6">
-            A reusable library of n8n workflow templates and Node.js integration modules
-            for common AI agent patterns: lead qualification, appointment scheduling,
-            document generation, and CRM synchronization. Designed to accelerate
-            deployment of new AI automation projects from scratch.
+          <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl mb-5">
+            Before migrating to n8n, the lead processing pipeline was built entirely in
+            Node.js — custom webhook controllers for Meta Lead Ads, real-time SMS validation
+            via Twilio, modular route/service architecture, and asynchronous event processing.
+            This system was the technical foundation that later evolved into the Sophia AI
+            ecosystem. It proved the architecture patterns that n8n now orchestrates at scale.
           </p>
           <ImagePlaceholder
-            label="Automation Workflow Library — project screenshot placeholder"
-            description="Insert a screenshot of the workflow template library, code repository, or documentation site when available."
+            label="NewKeys.Link Node.js backend — terminal log screenshot"
+            description="Insert the Node.js backend terminal screenshot showing real-time lead processing logs: webhook reception, WhatsApp template dispatch, and async event handlers."
             aspectRatio="video"
             className="max-w-2xl"
           />
@@ -252,13 +339,17 @@ export default function ProjectsPage() {
       <div className="mt-16 rounded-xl border border-dashed border-border bg-muted/30 p-8 text-center">
         <Badge variant="outline" className="mb-3 text-xs">Coming Soon</Badge>
         <h3 className="text-lg font-semibold text-foreground">
-          Live AI Agent Demonstrations
+          Interactive Demos
         </h3>
         <p className="mt-2 text-sm text-muted-foreground max-w-lg mx-auto leading-relaxed">
-          Future versions of this portfolio will include interactive demos where
-          visitors can experience Sophia-style AI agent workflows, live inventory
-          queries, and automated appointment booking directly in the browser.
+          Future versions of this portfolio will embed interactive demos directly in
+          the browser. For now, Sophia is accessible live via WhatsApp.
         </p>
+        <div className="mt-4">
+          <Button asChild variant="outline" size="sm">
+            <Link href="/contact">Get in Touch</Link>
+          </Button>
+        </div>
       </div>
     </div>
   )

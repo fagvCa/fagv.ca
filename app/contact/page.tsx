@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import { Globe, Github, Linkedin, Mail, MapPin, User } from "lucide-react"
+import { Globe, Github, Linkedin, Mail, MapPin, User, Phone } from "lucide-react"
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -26,8 +26,14 @@ const contactDetails = [
   {
     icon: Mail,
     label: "Email",
-    value: "fabio@fagv.ca",
-    href: "mailto:fabio@fagv.ca",
+    value: "dev@fagv.ca",
+    href: "mailto:dev@fagv.ca",
+  },
+  {
+    icon: Phone,
+    label: "Phone",
+    value: "+1 (437) 218-7469",
+    href: "tel:+14372187469",
   },
   {
     icon: Globe,
@@ -130,10 +136,10 @@ export default function ContactPage() {
             <p className="text-sm text-muted-foreground leading-relaxed mb-6">
               The best way to reach me is by email at{" "}
               <a
-                href="mailto:fabio@fagv.ca"
+                href="mailto:dev@fagv.ca"
                 className="font-medium text-foreground hover:text-blue-600 transition-colors"
               >
-                fabio@fagv.ca
+                dev@fagv.ca
               </a>
               . I respond to all relevant enquiries — typically within one business day.
             </p>
@@ -160,7 +166,7 @@ export default function ContactPage() {
             <h3 className="text-sm font-semibold text-foreground mb-4">Connect Directly</h3>
             <div className="flex flex-wrap gap-3">
               <a
-                href="mailto:fabio@fagv.ca"
+                href="mailto:dev@fagv.ca"
                 className="flex items-center gap-2 rounded-lg border border-border bg-background px-4 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors"
               >
                 <Mail className="size-4 text-muted-foreground" />

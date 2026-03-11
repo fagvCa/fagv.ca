@@ -47,35 +47,35 @@ const capabilities = [
 const techStack = [
   {
     category: "AI & LLM",
-    tools: ["OpenAI GPT-4", "LLM Orchestration", "Function Calling", "JSON Mode", "RAG Pipelines"],
+    tools: ["OpenAI GPT-4o", "Anthropic Claude", "Google Gemini", "OpenAI Whisper", "ElevenLabs TTS", "Prompt Engineering", "RAG Pipelines"],
   },
   {
     category: "Automation",
-    tools: ["n8n", "Webhook Pipelines", "Event-Driven Architecture", "Cron Scheduling"],
+    tools: ["n8n (20+ workflows)", "Node.js Microservices", "Webhooks", "Event-Driven Architecture", "Zapier", "Mautic"],
   },
   {
-    category: "Runtime & APIs",
-    tools: ["Node.js", "TypeScript", "REST APIs", "WebSockets"],
+    category: "Cloud & Infrastructure",
+    tools: ["Google Cloud Document AI", "Google Vertex AI", "Cloud Functions", "AWS EC2", "AWS S3", "AWS SES", "AWS Route 53"],
   },
   {
     category: "Messaging & Leads",
-    tools: ["WhatsApp Business Cloud API", "Meta Lead Ads", "Webhook Ingestion"],
-  },
-  {
-    category: "Frontend",
-    tools: ["Next.js", "React", "Tailwind CSS", "shadcn/ui"],
+    tools: ["WhatsApp Business Cloud API", "Meta Lead Ads", "Twilio", "ElevenLabs Voice"],
   },
   {
     category: "Data & Storage",
-    tools: ["Google Sheets API", "PostgreSQL", "Structured Logging"],
+    tools: ["MongoDB Atlas", "Google Sheets API", "Google Drive API", "Gmail API", "MySQL"],
+  },
+  {
+    category: "Dev & Frontend",
+    tools: ["TypeScript", "Next.js", "React", "REST APIs", "Postman", "Git"],
   },
 ]
 
 const metrics = [
   { value: "25+", label: "Years Engineering" },
-  { value: "3", label: "Languages Supported" },
+  { value: "30+", label: "Languages Supported" },
   { value: "24/7", label: "Autonomous Operation" },
-  { value: "6+", label: "Enterprise APIs Integrated" },
+  { value: "20+", label: "Production Workflows" },
 ]
 
 export default function HomePage() {

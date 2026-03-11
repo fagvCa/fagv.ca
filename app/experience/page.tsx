@@ -11,31 +11,33 @@ export const metadata: Metadata = {
 }
 
 const mississaugaHighlights = [
-  "Designed autonomous AI sales agent (Sophia) to handle lead qualification over WhatsApp Business",
-  "Integrated Meta Lead Ads with n8n orchestration for instant lead ingestion and qualification",
-  "Built multilingual conversation workflows in English, Spanish, and many languages more",
-  "Automated real-time inventory queries reducing sales team response time from hours to seconds",
-  "Implemented automated appointment booking directly within WhatsApp conversations",
-  "Created Google Sheets data synchronization for leads, appointments, and conversation logs",
-  "Developed document automation for sales contracts and follow-up communications",
-  "Built ROI measurement dashboards connecting lead source to appointment conversion rates",
+  "Designed and deployed Sophia AI — an autonomous multilingual sales agent on WhatsApp Business handling the full lead-to-appointment lifecycle",
+  "Integrated Meta Lead Ads with n8n orchestration for instant lead ingestion; agent responds in under 30 seconds vs. prior 2–4 hour manual follow-up",
+  "Built multilingual conversation workflows supporting 30+ languages with automatic language detection and ElevenLabs voice greetings on first contact",
+  "Implemented persistent conversation memory via MongoDB (dbSophia) — agent maintains full session context across disconnected interactions",
+  "Automated appointment booking through Nylas Calendar API called directly from the LangChain agent via tool use",
+  "Integrated Google Cloud Document AI to automate data extraction from financial funding forms, reducing manual entry errors by 90%",
+  "Developed Pricing Audit Agents to synchronize internal pricing records against live website data and alert management of discrepancies",
+  "Built Meta Ad Catalog generators via automated CSV manipulation to keep dynamic retargeting campaigns current with inventory",
+  "Reverse-engineered CRM authentication flows to build custom Postman collections for reliable lead synchronization",
+  "Architected 20+ active n8n production workflows spanning lead management, inventory sync, document processing, and reporting",
 ]
 
 const telscoHighlights = [
-  "Founded and operated a telecommunications infrastructure consultancy in Colombia",
-  "Led systems integration projects for Nokia, Siemens, Telefónica, and Alcatel networks",
-  "Designed and supervised deployment of GSM, UMTS, and transmission infrastructure",
-  "Managed end-to-end project delivery from site survey through commissioning and acceptance",
-  "Built operational processes and technical documentation frameworks adopted across projects",
-  "Delivered complex multi-vendor integration projects on compressed timelines",
+  "Founded and led Telsco SAS as a primary service partner for Nokia, Siemens, Telefónica, and Alcatel across Colombia and Latin America",
+  "Served Nokia as a specialized contractor delivering Care Services, Maintenance, Installation, Commissioning, and technical Training programs",
+  "Managed end-to-end project delivery from site survey through systems integration, commissioning, and acceptance — GSM, UMTS, and microwave transmission",
+  "Built internal operational processes, documentation standards, and project management frameworks adopted across multiple client engagements",
+  "Delivered complex multi-vendor integration projects on compressed timelines with multi-disciplinary teams across remote and urban sites",
+  "Established a reputation for consistently delivering solutions beyond the scope of formal requirements",
 ]
 
 const siemensHighlights = [
-  "Performed field engineering deployments for Nokia Siemens Networks across Colombia",
-  "Delivered technical training programs for telecommunications engineers on GSM and UMTS systems",
-  "Conducted site commissioning, optimization, and acceptance testing for base station deployments",
-  "Created technical training materials and laboratory exercises used across multiple cohorts",
-  "Served as technical lead for cross-functional teams on multi-site rollout programs",
+  "Completed 8 years at Siemens culminating in a TAC-3 role within the Microwave (MW) Care Support unit — specialized technical assistance to carrier clients in Colombia",
+  "Received advanced training in Network Management Systems Administration (Siemens ONMS on Unix OS) at Siemens headquarters in Munich, Germany",
+  "Designated as an official Siemens Technology Instructor — delivered 1,000+ hours of advanced technical training to corporate clients across Latin America",
+  "Developed laboratory exercises, assessment materials, and structured training programs used across multiple client cohorts in the region",
+  "Managed site commissioning, RF optimization, fault resolution, and multi-site rollout coordination across GSM and UMTS deployments",
 ]
 
 export default function ExperiencePage() {
@@ -58,26 +60,25 @@ export default function ExperiencePage() {
           icon={Cpu}
           iconColor="blue"
           company="Mississauga Hyundai"
-          role="Sales Specialist — Automation & AI Systems Development"
-          period="2022 – Present"
+          role="AI Solutions Developer & Sales Specialist"
+          period="2021 – Present"
           location="Mississauga, Ontario, Canada"
-          badges={["AI Agents", "n8n", "Node.js", "OpenAI API", "WhatsApp Business"]}
-          summary="While working in a customer-facing sales role, independently designed and deployed a suite of AI automation systems to optimize the dealership's operational workflows and generate measurable ROI — without dedicated engineering resources or a formal technology mandate."
+          badges={["AI Agents", "n8n", "Node.js", "OpenAI", "WhatsApp Business", "MongoDB", "Google Cloud"]}
+          summary="Independently designed and deployed a full AI automation ecosystem on top of existing dealership operations — without a dedicated engineering team or formal technology mandate. The work spans AI agent development, intelligent document processing, marketing automation, and custom API integrations."
           details={
             <>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                The primary output was <strong className="text-foreground">Sophia</strong>,
-                an autonomous multilingual AI sales agent deployed over WhatsApp Business.
-                Sophia automates the full lead qualification and appointment scheduling
-                workflow, handling inbound leads from Meta Lead Ads through to confirmed
-                test drive bookings — operating 24/7 without human intervention for
-                routine interactions.
+                The flagship output is <strong className="text-foreground">Sophia</strong>,
+                an autonomous multilingual AI sales agent operating over WhatsApp Business.
+                Sophia integrates nine systems — including OpenAI GPT-4o, ElevenLabs, Nylas
+                Calendar, MongoDB, and Meta Lead Ads — into a single orchestrated pipeline
+                that handles inbound leads 24/7 without human intervention for routine interactions.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed mt-3">
-                Beyond Sophia, built supporting automation systems for document generation,
-                data synchronization between the dealership&apos;s CRM and Google Sheets,
-                and reporting pipelines that connect lead source attribution to
-                appointment conversion metrics.
+                Alongside Sophia, built supporting systems for financial document automation
+                (Google Document AI), internal pricing auditing, dynamic ad catalog generation,
+                and a custom CRM integration layer using reverse-engineered authentication flows.
+                All automation runs across 20+ active n8n production workflows.
               </p>
             </>
           }
@@ -95,22 +96,21 @@ export default function ExperiencePage() {
           period="2005 – 2022"
           location="Bogotá, Colombia"
           badges={["Telecom Infrastructure", "Systems Integration", "Nokia", "Siemens", "Telefónica"]}
-          summary="Founded and led a telecommunications infrastructure consultancy delivering end-to-end systems integration projects for major carriers and equipment vendors across Colombia. Grew the company from a solo operation into a team serving Nokia, Siemens, Telefónica, and Alcatel on mission-critical network deployments."
+          summary="Founded and led a telecommunications infrastructure consultancy serving as a primary partner for Nokia, Siemens, Telefónica, and Alcatel. Grew from a solo operation to a team delivering end-to-end infrastructure and Care Services projects across Colombia and Latin America."
           details={
             <>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Telsco operated across the full project lifecycle — from initial site
-                surveys and technical design through installation supervision, systems
-                integration, and final acceptance testing. Projects included GSM, UMTS,
-                and microwave transmission infrastructure across both urban and remote
-                sites.
+                Telsco served Nokia primarily as a specialized contractor, delivering
+                Care Services, Maintenance, Installation and Commissioning, and Training
+                across GSM, UMTS, and microwave transmission infrastructure. Projects
+                covered both urban and remote sites, requiring multi-vendor coordination
+                and precision logistics.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed mt-3">
-                Built internal operational processes, technical documentation standards,
-                and project management frameworks that enabled consistent delivery under
-                demanding client timelines. Managed subcontractor relationships,
-                procurement logistics, and multi-stakeholder communication throughout
-                project execution.
+                Built internal operational processes, documentation standards, and project
+                management frameworks that enabled consistent delivery under demanding
+                client timelines. Managed subcontractor relationships, procurement
+                logistics, and multi-stakeholder communication throughout execution.
               </p>
             </>
           }
@@ -119,30 +119,32 @@ export default function ExperiencePage() {
 
         <Separator />
 
-        {/* Siemens / Nokia Siemens Networks */}
+        {/* Siemens */}
         <ExperienceBlock
           icon={Building2}
           iconColor="slate"
           company="Siemens / Nokia Siemens Networks"
-          role="Field Engineer & Technical Instructor"
-          period="2000 – 2005"
-          location="Colombia"
-          badges={["GSM", "UMTS", "Field Engineering", "Technical Training"]}
-          summary="Worked directly with Siemens and Nokia Siemens Networks on telecommunications network deployments and technical training programs. Built hands-on expertise in base station deployment, network optimization, and technical instruction that formed the foundation for later independent work."
+          role="Field Engineer & Master Technical Instructor"
+          period="2000 – 2008"
+          location="Colombia · Munich, Germany (training)"
+          badges={["GSM", "UMTS", "Microwave MW", "TAC-3", "Technical Training", "ONMS"]}
+          summary="Eight years at Siemens spanning GSM and UMTS field engineering, culminating in a TAC-3 role in the Microwave (MW) Care Support unit. Also designated as an official Siemens Technology Instructor, delivering 1,000+ hours of specialized training to corporate clients across Latin America."
           details={
             <>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Field engineering responsibilities covered site commissioning,
-                radio frequency optimization, fault resolution, and multi-site rollout
-                coordination across GSM and UMTS network deployments. Worked directly
-                with carrier engineering teams on complex integration challenges.
+                The TAC-3 role in MW Care Support involved providing specialized
+                technical assistance to carrier clients on critical microwave transport
+                systems — requiring deep expertise in transmission, multiplexing, and
+                fault resolution under operational pressure. Received advanced training
+                in Network Management Systems Administration (Siemens ONMS on Unix OS)
+                at Siemens headquarters in Munich, Germany.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed mt-3">
-                Technical instruction included designing and delivering structured
-                training programs for telecommunications engineers, covering GSM and
-                UMTS architecture, base station configuration, and network operations
-                tooling. Developed laboratory exercises and assessment materials used
-                across multiple training cohorts.
+                As a designated Technology Instructor, designed and delivered structured
+                training programs covering GSM and UMTS architecture, base station
+                configuration, and network operations tooling — including laboratory
+                exercises and assessments used across multiple client cohorts across
+                Latin America.
               </p>
             </>
           }

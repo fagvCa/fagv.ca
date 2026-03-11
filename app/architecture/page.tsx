@@ -15,37 +15,61 @@ const stackItems = [
     layer: "Orchestration",
     tool: "n8n",
     description:
-      "Visual, code-extensible workflow automation. Used to wire together triggers, AI model calls, API requests, and business logic into reliable, auditable pipelines without brittle glue code.",
+      "Visual, code-extensible workflow automation. Wires together triggers, AI model calls, API requests, and business logic into reliable, auditable pipelines. Currently running 20+ active production workflows.",
   },
   {
     layer: "Business Logic",
     tool: "Node.js Microservices",
     description:
-      "Lightweight, stateless service modules handle complex decision trees, data transformations, and routing logic that exceeds what n8n nodes can express natively.",
+      "Lightweight, stateless service modules handle complex decision trees, data transformations, and routing logic that exceeds what n8n nodes can express natively. Prior to n8n, the entire lead pipeline ran on custom Node.js services.",
   },
   {
     layer: "AI / LLM Layer",
-    tool: "OpenAI API",
+    tool: "OpenAI GPT-4o + Whisper · Claude · Gemini",
     description:
-      "GPT-4-class models provide natural language understanding, intent classification, response generation, and structured output extraction via function calling and JSON mode.",
+      "Multi-model strategy: GPT-4o for conversational agents (Sophia) and intent classification; Whisper for audio transcription; Claude for coding and reasoning tasks; Gemini for large-context processing and GCP ecosystem integration.",
+  },
+  {
+    layer: "Voice AI",
+    tool: "ElevenLabs eleven_multilingual_v2",
+    description:
+      "Generates personalized audio greetings in the customer's detected language using language-specific voice models. Output is Opus-encoded audio delivered directly via WhatsApp. Session recorded in MongoDB chat memory.",
   },
   {
     layer: "Messaging Channel",
-    tool: "WhatsApp Business Cloud API",
+    tool: "WhatsApp Business Cloud API · Twilio",
     description:
-      "Real-time bidirectional messaging through Meta's official Cloud API, handling webhook ingestion, message formatting, media, and template-based outbound messages.",
+      "Real-time bidirectional messaging via Meta's official Cloud API — webhook ingestion, template messages, interactive buttons, and media. Twilio used for SMS in the pre-n8n Node.js pipeline.",
+  },
+  {
+    layer: "Calendar & Scheduling",
+    tool: "Nylas Calendar API",
+    description:
+      "Appointment booking sub-workflow called via LangChain tool use. The agent extracts appointment details from conversation (time, client name, email, salesperson) via $fromAI() and creates structured calendar events with participant metadata.",
   },
   {
     layer: "Data & Storage",
-    tool: "Google Sheets / Cloud Databases",
+    tool: "MongoDB Atlas · Google Sheets API · MySQL",
     description:
-      "Structured data storage for leads, appointment records, and audit logs. Google Sheets serves as a low-friction operational datastore; cloud databases scale to production volumes.",
+      "MongoDB stores persistent conversation memory (chatMemory collection, keyed by WhatsApp ID) and the live inventory database (ucdInventory). Google Sheets API serves as a low-friction operational datastore for leads and records. MySQL for relational persistence.",
+  },
+  {
+    layer: "Intelligent Document Processing",
+    tool: "Google Cloud Document AI · Vertex AI",
+    description:
+      "Document AI processors automate structured data extraction from automotive funding forms (credit applications, lease documents), replacing manual data entry. Vertex AI used for Gemini orchestration and cloud-native ML tasks.",
   },
   {
     layer: "Lead Acquisition",
-    tool: "Meta Lead Ads",
+    tool: "Meta Lead Ads · Google Workspace APIs",
     description:
-      "Facebook/Instagram lead forms feed directly into the automation pipeline via webhook, triggering the qualification workflow within seconds of form submission.",
+      "Facebook/Instagram lead forms feed into the pipeline via webhook, triggering qualification within seconds. Google Sheets API, Drive API, and Gmail API power inventory synchronization, document management, and automated email workflows.",
+  },
+  {
+    layer: "Cloud Infrastructure",
+    tool: "AWS · Google Cloud Platform",
+    description:
+      "AWS: EC2 (compute), S3 (object storage), Route 53 (DNS), SES (transactional email), IAM (access management). GCP: Cloud Functions, Cloud Storage, Document AI, Vertex AI. Multi-cloud deployment strategy based on service fit.",
   },
 ]
 
@@ -239,57 +263,66 @@ export default function ArchitecturePage() {
             {
               category: "AI & Language Models",
               items: [
-                { name: "OpenAI GPT-4 / GPT-4o", note: "Core reasoning and generation" },
+                { name: "OpenAI GPT-4o / GPT-4o-mini", note: "Conversational agents & routing" },
+                { name: "OpenAI Whisper", note: "Audio transcription" },
+                { name: "Anthropic Claude", note: "Coding & complex reasoning" },
+                { name: "Google Gemini / Vertex AI", note: "Large-context processing & GCP" },
+                { name: "ElevenLabs eleven_multilingual_v2", note: "Voice synthesis (30+ languages)" },
                 { name: "Function Calling / Tool Use", note: "Structured agent actions" },
-                { name: "JSON Mode", note: "Reliable structured outputs" },
-                { name: "System prompt engineering", note: "Context and behaviour control" },
-                { name: "RAG pipelines", note: "Retrieval-augmented generation" },
+                { name: "Prompt Engineering", note: "System prompts & context control" },
+                { name: "RAG Pipelines", note: "Retrieval-augmented generation" },
               ],
             },
             {
               category: "Orchestration & Automation",
               items: [
-                { name: "n8n", note: "Visual workflow orchestration" },
+                { name: "n8n (20+ production workflows)", note: "Visual workflow orchestration" },
+                { name: "LangChain (LLM agent framework)", note: "Agent + tool invocation" },
                 { name: "Webhook ingestion", note: "Event-driven triggers" },
                 { name: "Cron scheduling", note: "Time-based automation" },
                 { name: "Error handling & retries", note: "Resilient pipelines" },
-                { name: "Parallel branches", note: "Concurrent workflow execution" },
+                { name: "Mautic", note: "Email campaign automation" },
+                { name: "Zapier", note: "Supplemental automation" },
               ],
             },
             {
               category: "Runtime & Backend",
               items: [
                 { name: "Node.js", note: "Primary runtime" },
-                { name: "TypeScript", note: "Type-safe service code" },
+                { name: "TypeScript / JavaScript", note: "Service & agent code" },
                 { name: "REST APIs", note: "Integration pattern" },
-                { name: "Express / lightweight HTTP", note: "Service endpoints" },
-                { name: "Environment config management", note: "Secrets & configuration" },
+                { name: "Python (scripting)", note: "Data processing & ML tasks" },
+                { name: "Postman collections", note: "API testing & CRM integration" },
               ],
             },
             {
-              category: "Messaging & Channels",
+              category: "Messaging, Calendar & Channels",
               items: [
                 { name: "WhatsApp Business Cloud API", note: "Bidirectional messaging" },
                 { name: "Meta Lead Ads webhooks", note: "Lead ingestion" },
-                { name: "Template messaging", note: "Outbound campaigns" },
-                { name: "Media handling", note: "Images, documents" },
+                { name: "Twilio", note: "SMS in early pipeline" },
+                { name: "Nylas Calendar API", note: "Appointment booking" },
+                { name: "ElevenLabs Voice", note: "Audio greetings via WhatsApp" },
               ],
             },
             {
               category: "Data & Storage",
               items: [
+                { name: "MongoDB Atlas", note: "Chat memory & inventory DB" },
                 { name: "Google Sheets API", note: "Operational datastore" },
-                { name: "PostgreSQL", note: "Relational persistence" },
-                { name: "Structured JSON logging", note: "Audit trails" },
-                { name: "Conversation history management", note: "Context window control" },
+                { name: "Google Drive & Gmail APIs", note: "Document & email workflows" },
+                { name: "MySQL", note: "Relational persistence" },
+                { name: "Google Cloud Document AI", note: "OCR & structured extraction" },
               ],
             },
             {
-              category: "Frontend & Tooling",
+              category: "Cloud & Infrastructure",
               items: [
-                { name: "Next.js 16 / React 19", note: "Web applications" },
-                { name: "Tailwind CSS v4", note: "Styling" },
-                { name: "shadcn/ui", note: "Component library" },
+                { name: "AWS EC2", note: "Compute" },
+                { name: "AWS S3", note: "Object storage" },
+                { name: "AWS Route 53 / SES / IAM", note: "DNS, email, access control" },
+                { name: "GCP Cloud Functions", note: "Serverless execution" },
+                { name: "GCP Cloud Storage", note: "File storage" },
                 { name: "Git / GitHub", note: "Version control" },
               ],
             },
