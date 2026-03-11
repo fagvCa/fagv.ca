@@ -50,6 +50,11 @@ export function Nav() {
                 {link.label}
               </Link>
             ))}
+            <div className="ml-3 pl-3 border-l border-border">
+              <Button asChild size="sm">
+                <Link href="/contact">Hire Me</Link>
+              </Button>
+            </div>
           </nav>
 
           {/* Mobile menu toggle */}

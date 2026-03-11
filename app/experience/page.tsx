@@ -58,7 +58,7 @@ export default function ExperiencePage() {
           icon={Cpu}
           iconColor="blue"
           company="Mississauga Hyundai"
-          role="Sales Specialist — Automation &amp; AI Systems Development"
+          role="Sales Specialist — Automation & AI Systems Development"
           period="2022 – Present"
           location="Mississauga, Ontario, Canada"
           badges={["AI Agents", "n8n", "Node.js", "OpenAI API", "WhatsApp Business"]}
@@ -91,7 +91,7 @@ export default function ExperiencePage() {
           icon={Radio}
           iconColor="slate"
           company="Telsco SAS"
-          role="Founder &amp; CEO"
+          role="Founder & CEO"
           period="2005 – 2022"
           location="Bogotá, Colombia"
           badges={["Telecom Infrastructure", "Systems Integration", "Nokia", "Siemens", "Telefónica"]}
@@ -124,7 +124,7 @@ export default function ExperiencePage() {
           icon={Building2}
           iconColor="slate"
           company="Siemens / Nokia Siemens Networks"
-          role="Field Engineer &amp; Technical Instructor"
+          role="Field Engineer & Technical Instructor"
           period="2000 – 2005"
           location="Colombia"
           badges={["GSM", "UMTS", "Field Engineering", "Technical Training"]}
@@ -157,7 +157,7 @@ interface ExperienceBlockProps {
   icon: React.ComponentType<{ className?: string }>
   iconColor: "blue" | "slate"
   company: string
-  role: string
+  role: React.ReactNode
   period: string
   location: string
   badges: string[]
@@ -191,10 +191,7 @@ function ExperienceBlock({
           <div className="flex flex-wrap items-start justify-between gap-2">
             <div>
               <h2 className="text-lg font-bold text-foreground">{company}</h2>
-              <p
-                className="text-sm font-medium text-muted-foreground"
-                dangerouslySetInnerHTML={{ __html: role }}
-              />
+              <p className="text-sm font-medium text-muted-foreground">{role}</p>
             </div>
             <div className="text-right shrink-0">
               <p className="text-sm font-medium text-foreground">{period}</p>

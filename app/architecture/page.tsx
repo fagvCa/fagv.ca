@@ -186,7 +186,7 @@ export default function ArchitecturePage() {
       <Separator className="mb-14" />
 
       {/* Section 3: Design Principles */}
-      <section>
+      <section className="mb-14">
         <h2 className="text-xl font-bold tracking-tight text-foreground mb-4">
           Design Principles
         </h2>
@@ -219,6 +219,97 @@ export default function ArchitecturePage() {
                 </CardDescription>
               </CardContent>
             </Card>
+          ))}
+        </div>
+      </section>
+
+      <Separator className="mb-14" />
+
+      {/* Section 4: Tools & Technologies */}
+      <section>
+        <h2 className="text-xl font-bold tracking-tight text-foreground mb-2">
+          Tools &amp; Technologies
+        </h2>
+        <p className="text-muted-foreground text-sm leading-relaxed max-w-3xl mb-8">
+          The full inventory of tools, platforms, and protocols used across AI agent
+          and automation projects — organized by function.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[
+            {
+              category: "AI & Language Models",
+              items: [
+                { name: "OpenAI GPT-4 / GPT-4o", note: "Core reasoning and generation" },
+                { name: "Function Calling / Tool Use", note: "Structured agent actions" },
+                { name: "JSON Mode", note: "Reliable structured outputs" },
+                { name: "System prompt engineering", note: "Context and behaviour control" },
+                { name: "RAG pipelines", note: "Retrieval-augmented generation" },
+              ],
+            },
+            {
+              category: "Orchestration & Automation",
+              items: [
+                { name: "n8n", note: "Visual workflow orchestration" },
+                { name: "Webhook ingestion", note: "Event-driven triggers" },
+                { name: "Cron scheduling", note: "Time-based automation" },
+                { name: "Error handling & retries", note: "Resilient pipelines" },
+                { name: "Parallel branches", note: "Concurrent workflow execution" },
+              ],
+            },
+            {
+              category: "Runtime & Backend",
+              items: [
+                { name: "Node.js", note: "Primary runtime" },
+                { name: "TypeScript", note: "Type-safe service code" },
+                { name: "REST APIs", note: "Integration pattern" },
+                { name: "Express / lightweight HTTP", note: "Service endpoints" },
+                { name: "Environment config management", note: "Secrets & configuration" },
+              ],
+            },
+            {
+              category: "Messaging & Channels",
+              items: [
+                { name: "WhatsApp Business Cloud API", note: "Bidirectional messaging" },
+                { name: "Meta Lead Ads webhooks", note: "Lead ingestion" },
+                { name: "Template messaging", note: "Outbound campaigns" },
+                { name: "Media handling", note: "Images, documents" },
+              ],
+            },
+            {
+              category: "Data & Storage",
+              items: [
+                { name: "Google Sheets API", note: "Operational datastore" },
+                { name: "PostgreSQL", note: "Relational persistence" },
+                { name: "Structured JSON logging", note: "Audit trails" },
+                { name: "Conversation history management", note: "Context window control" },
+              ],
+            },
+            {
+              category: "Frontend & Tooling",
+              items: [
+                { name: "Next.js 16 / React 19", note: "Web applications" },
+                { name: "Tailwind CSS v4", note: "Styling" },
+                { name: "shadcn/ui", note: "Component library" },
+                { name: "Git / GitHub", note: "Version control" },
+              ],
+            },
+          ].map((group) => (
+            <div key={group.category}>
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3 border-b border-border pb-2">
+                {group.category}
+              </p>
+              <ul className="space-y-2">
+                {group.items.map((item) => (
+                  <li key={item.name} className="flex items-baseline gap-2">
+                    <span className="size-1 shrink-0 rounded-full bg-blue-400 mt-[7px]" />
+                    <div>
+                      <span className="text-sm font-medium text-foreground">{item.name}</span>
+                      <span className="text-xs text-muted-foreground ml-1.5">— {item.note}</span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
         </div>
       </section>
