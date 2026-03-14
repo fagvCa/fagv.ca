@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { ArrowRight, Bot, GitBranch, Layers, Link2, Settings2, Zap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
@@ -47,7 +48,7 @@ const capabilities = [
 const techStack = [
   {
     category: "AI & LLM",
-    tools: ["OpenAI GPT-4o", "Anthropic Claude", "Google Gemini", "OpenAI Whisper", "ElevenLabs TTS", "Prompt Engineering", "RAG Pipelines"],
+    tools: ["OpenAI GPT", "Anthropic Claude", "Google Gemini", "OpenAI Whisper", "ElevenLabs TTS", "Prompt Engineering", "RAG Pipelines"],
   },
   {
     category: "Automation",
@@ -73,7 +74,7 @@ const techStack = [
 
 const metrics = [
   { value: "25+", label: "Years Engineering" },
-  { value: "30+", label: "Languages Supported" },
+  { value: "30+", label: "Languages Supported by AI" },
   { value: "24/7", label: "Autonomous Operation" },
   { value: "20+", label: "Production Workflows" },
 ]
@@ -134,12 +135,15 @@ export default function HomePage() {
 
             {/* Portrait placeholder */}
             <div className="flex justify-center lg:justify-end">
-              <ImagePlaceholder
-                label="Portrait photo placeholder"
-                description="Upload a professional headshot — ideally a high-contrast photo on a neutral background."
-                aspectRatio="portrait"
-                className="w-full max-w-sm"
-              />
+              <div className="relative w-full max-w-sm aspect-[3/4] rounded-xl overflow-hidden">
+                <Image
+                  src="/images/portrait.png"
+                  alt="Fabio Gomez Velasquez"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
             </div>
           </div>
         </div>

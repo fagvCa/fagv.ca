@@ -25,7 +25,7 @@ const stackItems = [
   },
   {
     layer: "AI / LLM Layer",
-    tool: "OpenAI GPT-4o + Whisper · Claude · Gemini",
+    tool: "OpenAI GPT + Whisper · Claude · Gemini",
     description:
       "Multi-model strategy: GPT-4o for conversational agents (Sophia) and intent classification; Whisper for audio transcription; Claude for coding and reasoning tasks; Gemini for large-context processing and GCP ecosystem integration.",
   },
@@ -263,7 +263,7 @@ export default function ArchitecturePage() {
             {
               category: "AI & Language Models",
               items: [
-                { name: "OpenAI GPT-4o / GPT-4o-mini", note: "Conversational agents & routing" },
+                { name: "OpenAI GPT / GPT-4o-mini", note: "Conversational agents & routing" },
                 { name: "OpenAI Whisper", note: "Audio transcription" },
                 { name: "Anthropic Claude", note: "Coding & complex reasoning" },
                 { name: "Google Gemini / Vertex AI", note: "Large-context processing & GCP" },

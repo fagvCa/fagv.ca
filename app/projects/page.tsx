@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import Image from "next/image"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
 const sophiaTech = [
   "n8n orchestration",
   "Node.js microservices",
-  "OpenAI GPT-4o + Whisper",
+  "OpenAI GPT + Whisper",
   "ElevenLabs multilingual TTS",
   "WhatsApp Business Cloud API",
   "MongoDB Atlas (chat memory + inventory)",
@@ -71,7 +72,7 @@ const sophiaCapabilities = [
     icon: Globe,
     title: "Multilingual Conversation (30+)",
     description:
-      "Detects language automatically on every message and responds in the customer's own language. Supports 30+ languages via OpenAI GPT-4o with a dedicated language-classifier agent running before each LLM call.",
+      "Detects language automatically on every message and responds in the customer's own language. Supports 30+ languages via OpenAI GPT with a dedicated language-classifier agent running before each LLM call.",
   },
   {
     icon: MessageSquare,
@@ -181,7 +182,8 @@ export default function ProjectsPage() {
               </a>
             </Button>
             <p className="text-xs text-muted-foreground">
-              Live agent — tap the button and send a message to interact with Sophia directly.
+              Live agent — tap the button and send a message to interact with Sophia directly.<br />
+              Test mode — your number will not be stored or treated as a real lead.
             </p>
           </div>
         </div>
@@ -213,16 +215,23 @@ export default function ProjectsPage() {
 
         {/* Architecture diagram placeholders */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <ImagePlaceholder
-            label="n8n workflow canvas — Sophia main orchestration workflow"
-            description="Insert a perspective screenshot of the Sophia on WhatsApp_v11 n8n workflow showing nodes: WhatsApp Trigger → Route Types → Language Detector → Sophia AI agent → sub-workflow calls."
-            aspectRatio="video"
-          />
-          <ImagePlaceholder
-            label="WhatsApp conversation screenshot — Sophia in action"
-            description="Insert a screenshot of a live Sophia conversation: lead arrives, inventory query, vehicle card template, appointment booking confirmation."
-            aspectRatio="video"
-          />
+          <div className="relative w-full aspect-video rounded-xl overflow-hidden">
+            <Image
+              src="/images/n8n-sophia-flow.png"
+              alt="n8n  Sophia AI Workflow"
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+          <div className="relative w-full aspect-video rounded-xl overflow-hidden">
+            <Image
+              src="/images/n8n-sophia-flow.png"
+              alt="WhatsApp conversation screenshot — Sophia in action"
+              fill
+              className="object-cover"
+            />
+          </div>
         </div>
 
         {/* Tech stack */}
@@ -326,12 +335,14 @@ export default function ProjectsPage() {
             This system was the technical foundation that later evolved into the Sophia AI
             ecosystem. It proved the architecture patterns that n8n now orchestrates at scale.
           </p>
-          <ImagePlaceholder
-            label="NewKeys.Link Node.js backend — terminal log screenshot"
-            description="Insert the Node.js backend terminal screenshot showing real-time lead processing logs: webhook reception, WhatsApp template dispatch, and async event handlers."
-            aspectRatio="video"
-            className="max-w-2xl"
-          />
+          <div className="relative w-full max-w-2xl aspect-video rounded-xl overflow-hidden">
+            <Image
+              src="/images/node-workflow.png"
+              alt="Real-time lead processing logs: webhook reception, WhatsApp template dispatch, and async event handlers."
+              fill
+              className="object-cover"
+            />
+          </div>
         </div>
       </div>
 

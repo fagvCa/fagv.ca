@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, Youtube, GraduationCap } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
@@ -209,12 +210,15 @@ export default function AboutPage() {
 
         {/* Sidebar */}
         <div className="space-y-6">
-          <ImagePlaceholder
-            label="Professional photo placeholder"
-            description="Upload a professional headshot or engineering workspace photo."
-            aspectRatio="portrait"
-            className="w-full"
-          />
+          <div className="relative w-full max-w-sm aspect-[3/4] rounded-xl overflow-hidden">
+            <Image
+              src="/images/portrait.png"
+              alt="Fabio Gomez Velasquez"
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
 
           <Card className="gap-3">
             <CardHeader className="pb-0">

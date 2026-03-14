@@ -70,7 +70,7 @@ export default function ExperiencePage() {
               <p className="text-sm text-muted-foreground leading-relaxed">
                 The flagship output is <strong className="text-foreground">Sophia</strong>,
                 an autonomous multilingual AI sales agent operating over WhatsApp Business.
-                Sophia integrates nine systems — including OpenAI GPT-4o, ElevenLabs, Nylas
+                Sophia integrates nine systems — including OpenAI GPT, ElevenLabs, Nylas
                 Calendar, MongoDB, and Meta Lead Ads — into a single orchestrated pipeline
                 that handles inbound leads 24/7 without human intervention for routine interactions.
               </p>
